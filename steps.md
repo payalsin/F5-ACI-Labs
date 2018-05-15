@@ -1,6 +1,6 @@
 # Lab Exercise 2
 
-### -----DELETE------
+### -----DELETE START------
 >**Please note that the images used in the lab guide are representative and NOT based on any specific pod. Please use the information in the lab guide instead.**
 
 Lab-2 will be used to demonstrate L4-L7 service insertion in managed mode with device manager to simulate an enterprise network and/or cloud provider’s application delivery offering while allowing the application owner to manage the L4-L7 device application template via a centralized device manager. 
@@ -9,18 +9,18 @@ We will use the F5 BIG-IP VE Virtual ADC and F5 iWorkflow workflow management to
 
 Different from the previous CiscoLive, we will demonstrate the Policy-Based Redirect feature that was introduced in APIC version 2.0 in this lab exercise.
 
-### ------DELETE------
+### ------DELETE END------
 
-## ++++++ Payal suggestion ADD ++++++++
+## ++++++ Payal suggestion ADD START++++++++
 Lab-2 will use Ansible to configure BIG-IP to correspond to the Unmanaged mode of APIC deployment.
 - Goal is to perform L2-L3 stitching between the Cisco ACI fabric and F5 BIG-IP.
 - Configure the L4-L7 parameters on F5 BIG-IP using ansible playbooks.
 
-### +++++++++ ADD +++++++++
+### +++++++++ ADD END +++++++++
 
 ![Environment](../img/env-lab2.png)
 
-### --------DELETE ---------
+### --------DELETE START ---------
 
 ## Verify the F5 BIG-IP iApps
 
@@ -243,11 +243,22 @@ Navigate to your tenant to confirm the Device Manager is created correctly:
 
 ![Verify Device Manager](../img/tenant-verify-devmgr.png)
 
-### --------------DELETE------------------
+### --------------DELETE END------------------
 
-## ++++++ Payal suggestion ADD ++++++++
+## ++++++ Payal suggestion ADD START++++++++
 Fill out the variable file which represent's the application configuration that will be pushed to the Big-IP
-- Give example of variable file and guide the user as to what to fill in 
+
+The variable file will contain VLAN tags along with other information.The VLAN tags should match the VLAN tags configured on APIC in the logical device cluster. The ansible playbook will only configure the BIG-IP.
+
+This variable file is designed to configure the following on the BIG-IP
+
+- Onboarding : NTP, DNS, Hostname, SSH settings, Module provisioning
+- Networking: 2 VLAN's, 2 Self-IP's, SNAT
+    - This represents a 2 ARM mode BIG-IP connection to the APIC
+        - Same interface on the BIG-IP will be used for client and server traffic
+        - Separate VLAN for client and server traffic is tagged on the BIG-IP interface
+    - SNAT is set to none (Assumption: Backend servers have the BIG-IP as their default gateway)
+- HTTP service: Pool members, Pool, Virtual Server
 
 ```
 onboarding: "yes"                                   Do you want to onboard the BIG-IP - Options: yes/no
@@ -302,11 +313,11 @@ bigip_selfip_information:                           Self-IP to be added to BIG-I
   
 service: "yes"	                                    Do you want to configure HTTP service on the BIG-IP -Options: yes/no
 	
-vip_name: "http_vs"	                                VIP information (Part of configuring HTTP service)
+vip_name: "http_vs"	                            VIP information (Part of configuring HTTP service)
 vip_port: "80"	
 vip_ip: "10.168.68.105"
 	
-snat: "None"                                        Options: ‘None/Automap/snat-pool name’
+snat: "automap"                                     Options: ‘None/Automap/snat-pool name’
 pool_name: "web-pool"	                            Pool Information (Part of configuring HTTP service)
 pool_members:	
 - port: "80"	
@@ -314,10 +325,12 @@ pool_members:
 - port: "80"	
   host: "192.168.68.141"
 ```
-### +++++++++ ADD +++++++++
+RUN THE PLAYBOOK
+### +++++++++ ADD END +++++++++
 
 ##Create the L4-L7 Device for Service
 
+### ----------DELETE START------------
 Navigate to your tenant to create a new L4-L7 Device by clicking the following:  
 **Tenants {TSTUDENT}-lab2 -> L4-L7 Services -> L4-L7 Devices**  
 
@@ -638,6 +651,14 @@ Click the hyperlink in **Name** and you will be directed to the Application Serv
 
 ![Components](../img/components.png)
 
+### ----------- DELETE END ---------------
+
+### +++++++++++ Payal suggestion ADD START ++++++++++++
+Creating L4-L7 constructs for unmanaged mode on APIC (either manual or using APIC ansible modules)
+
+* REVERSE the flow - configure APIC first and then configure BIG-IP using the vairable file and playbook !!!!!
+## ++++++++++++ ADD END +++++++++++++++++
+
 Go to your RDP command line and ping **{TL2F5VIP}** (VIP). This should succeed.
 
 You can now verify the Virtual Server (or VIP) by using your browser and entering the VIP into the address window:  
@@ -694,6 +715,7 @@ We can accomplish this by using the Policy-Based Redirect feature in the ACI fab
 
 Let's reconfigure the ACI fabric and the ADC to see how Policy-Based Redirect in action.
 
+### --------- DELETE START----------
 First, we will undeploy the service graph. In the APIC GUI, click the following:   
  
 **Tenants {TSTUDENT}-lab2 -> Security Policies -> Contracts -> {TSNUM}-lab2-cntr2 -> Subjects**  
@@ -709,6 +731,12 @@ Navigate to **Tenants {TSTUDENT}-lab2 -> L4-L7 Services -> Deployed Devices**, y
 ![Delete Pending](../img/pbr-deletepending.png)
 
 Once the service graph is undeployed successfully, the Work pane under **Deployed Devices** will be emptied.  
+### --------DELETE END------------
+
+### +++++++++ Payal suggestion ADD START +++++++++
+Change SNAT from automap to none in the playbook and run the playbook again
+
+### ++++ ADD END ++++
 
 In order to configure policy-based redirect, we need to disable the **Endpoint Dataplane Learning** under the **vip-bd**. To preserve the client's real IP, the client's real IP will remain the same after the packet is load balanced by the ADC. If dataplane learning is enabled, the COOP database will program the leaf where the ADC is connected to with the client's IP and this will cause communication issue between the client and other EPs in the ACI fabric. 
 
@@ -804,6 +832,7 @@ Select the service graph template **{TSTUDENT}-lab2/{TSNUM}-lab2-sg2**
 
 Click **Submit** to accept the configuration
 
+### ------ DELETE START ----------
 ##Verifying the BIG-IP Service Graph Deployment with Policy-Based Redirect on APIC
 
 You can now verify if APIC has deployed the service graph with policy-based redirect correctly. Navigate to the following:  
@@ -877,6 +906,8 @@ Let’s go back to the Navigation pane and click the **iApps -> Application Serv
 Click the hyperlink in **Name** and you will be directed to the Application Services **Components**. 
 
 ![Components](../img/components.png)
+
+### ------ DELETE END ----------
 
 Go to your RDP command line and ping **{TL2F5VIP}** (VIP). This should succeed.
 
