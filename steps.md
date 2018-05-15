@@ -1,6 +1,6 @@
 # Lab Exercise 2
 
-###-----DELETE------
+### -----DELETE------
 >**Please note that the images used in the lab guide are representative and NOT based on any specific pod. Please use the information in the lab guide instead.**
 
 Lab-2 will be used to demonstrate L4-L7 service insertion in managed mode with device manager to simulate an enterprise network and/or cloud provider’s application delivery offering while allowing the application owner to manage the L4-L7 device application template via a centralized device manager. 
@@ -9,84 +9,18 @@ We will use the F5 BIG-IP VE Virtual ADC and F5 iWorkflow workflow management to
 
 Different from the previous CiscoLive, we will demonstrate the Policy-Based Redirect feature that was introduced in APIC version 2.0 in this lab exercise.
 
-###------DELETE------
+### ------DELETE------
 
 ## ++++++ Payal suggestion ADD ++++++++
 Lab-2 will use Ansible to configure BIG-IP to correspond to the Unmanaged mode of APIC deployment.
 - Goal is to perform L2-L3 stitching between the Cisco ACI fabric and F5 BIG-IP.
 - Configure the L4-L7 parameters on F5 BIG-IP using ansible playbooks.
 
-Fill out the variable file which represent's the application configuration that will be pushed to the Big-IP
-- Give example of variable file and guide the user as to what to fill in 
-
-```
-onboarding: "yes"                                   Do you want to onboard the BIG-IP - Options: yes/no
-banner_text: "--Standalone BIG-IP UnManaged ---"    SSH banner text
-	
-hostname: 'bigip.local'	                            Hostname of the BIG-IP (Part of onboarding)
-	
-ntp_servers:	                                    NTP servers to be configured (Part of onboarding)
- - '172.27.1.1'	
- - '172.27.1.2'	
-	
-dns_servers:	                                    DNS servers to be configured (Part of onboarding)
- - '8.8.8.8'	
- - '4.4.4.4'	
-ip_version: 4	
-	
-module_provisioning:	                            Modules to be provisioned on BIG-IP (Part of onboarding)
- - name: 'ltm'	
-   level: 'nominal'	
-	
-tenant_name_aci: "UM_F5_Tenant"	                    APIC tenant name
-ldev_name_aci: "BIGIP_PHY"	                        APIC logical device cluster name
-	
-	
-bigip_ip: 10.192.73.91	                            BIG-IP credentials
-bigip_username: "admin"	
-bigip_password: "admin"	
-	
-vlan_information:                                   VLAN to be added to BIG-IP
-- name: "External_VLAN"                             VLAN’s match what is present in the logical device cluster BIGIP_PHY
-  id: "1195"
-  interface: "2.2"
-- name: "Internal_VLAN"
-  id: "1695"
-  interface: "2.2"
-	   
-static_route:	                                    Add a static route
-- name: "default"
-  gw_address: "10.168.56.1"
-  destination: "0.0.0.0"
-  netmask: "0.0.0.0"
-  
-bigip_selfip_information:                           Self-IP to be added to BIG-IP, tag the appropriate VLAN to the respective Self-IP
-- name: 'External-SelfIP'
-  address: '10.168.68.10'
-  netmask: '255.255.255.0'
-  vlan: "{{vlan_information[0]['name']}}"
-- name: 'Internal-SelfIP'
-  address: '192.168.68.10'
-  netmask: '255.255.255.0'
-  vlan: "{{vlan_information[1]['name']}}"	
-  
-service: "yes"	                                    Do you want to configure HTTP service on the BIG-IP -Options: yes/no
-	
-vip_name: "http_vs"	                                VIP information (Part of configuring HTTP service)
-vip_port: "80"	
-vip_ip: "10.168.68.105"
-	
-snat: "None"                                        Options: ‘None/Automap/snat-pool name’
-pool_name: "web-pool"	                            Pool Information (Part of configuring HTTP service)
-pool_members:	
-- port: "80"	
-  host: "192.168.68.140"	
-- port: "80"	
-  host: "192.168.68.141"
-```
 ### +++++++++ ADD +++++++++
 
 ![Environment](../img/env-lab2.png)
+
+### --------DELETE ---------
 
 ## Verify the F5 BIG-IP iApps
 
@@ -308,6 +242,79 @@ Navigate to your tenant to confirm the Device Manager is created correctly:
 **Tenants {TSTUDENT}-lab2 -> L4-L7 Services -> Device Manager -> device-manager-{TSTUDENT}**  
 
 ![Verify Device Manager](../img/tenant-verify-devmgr.png)
+
+### --------------DELETE------------------
+
+## ++++++ Payal suggestion ADD ++++++++
+Fill out the variable file which represent's the application configuration that will be pushed to the Big-IP
+- Give example of variable file and guide the user as to what to fill in 
+
+```
+onboarding: "yes"                                   Do you want to onboard the BIG-IP - Options: yes/no
+banner_text: "--Standalone BIG-IP UnManaged ---"    SSH banner text
+	
+hostname: 'bigip.local'	                            Hostname of the BIG-IP (Part of onboarding)
+	
+ntp_servers:	                                    NTP servers to be configured (Part of onboarding)
+ - '172.27.1.1'	
+ - '172.27.1.2'	
+	
+dns_servers:	                                    DNS servers to be configured (Part of onboarding)
+ - '8.8.8.8'	
+ - '4.4.4.4'	
+ip_version: 4	
+	
+module_provisioning:	                            Modules to be provisioned on BIG-IP (Part of onboarding)
+ - name: 'ltm'	
+   level: 'nominal'	
+	
+tenant_name_aci: "UM_F5_Tenant"	                    APIC tenant name
+ldev_name_aci: "BIGIP_PHY"	                        APIC logical device cluster name
+	
+	
+bigip_ip: 10.192.73.91	                            BIG-IP credentials
+bigip_username: "admin"	
+bigip_password: "admin"	
+	
+vlan_information:                                   VLAN to be added to BIG-IP
+- name: "External_VLAN"                             VLAN’s match what is present in the logical device cluster BIGIP_PHY
+  id: "1195"
+  interface: "2.2"
+- name: "Internal_VLAN"
+  id: "1695"
+  interface: "2.2"
+	   
+static_route:	                                    Add a static route
+- name: "default"
+  gw_address: "10.168.56.1"
+  destination: "0.0.0.0"
+  netmask: "0.0.0.0"
+  
+bigip_selfip_information:                           Self-IP to be added to BIG-IP, tag the appropriate VLAN to the respective Self-IP
+- name: 'External-SelfIP'
+  address: '10.168.68.10'
+  netmask: '255.255.255.0'
+  vlan: "{{vlan_information[0]['name']}}"
+- name: 'Internal-SelfIP'
+  address: '192.168.68.10'
+  netmask: '255.255.255.0'
+  vlan: "{{vlan_information[1]['name']}}"	
+  
+service: "yes"	                                    Do you want to configure HTTP service on the BIG-IP -Options: yes/no
+	
+vip_name: "http_vs"	                                VIP information (Part of configuring HTTP service)
+vip_port: "80"	
+vip_ip: "10.168.68.105"
+	
+snat: "None"                                        Options: ‘None/Automap/snat-pool name’
+pool_name: "web-pool"	                            Pool Information (Part of configuring HTTP service)
+pool_members:	
+- port: "80"	
+  host: "192.168.68.140"	
+- port: "80"	
+  host: "192.168.68.141"
+```
+### +++++++++ ADD +++++++++
 
 ##Create the L4-L7 Device for Service
 
