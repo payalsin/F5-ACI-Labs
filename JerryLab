@@ -100,7 +100,169 @@ Once you are logged in click on **Templates** located in the top level menu:
 
 ![ansible tower](../img/ansibletowertemplate.png)
 
-Click on the rocket icon to execute the playbook to provision the BigIP: 
+<<Start - Added by Payal>>
+
+Click on the template **podxx**. There is a ansible playbook associated with the template. When the template is launched, the playbook will be executed
+
+![ansible tower](../img/ansibletowertemplatedetail.png)
+
+The playbook in this case is stored on the Ansible Tower itself (you cannot view the contents from the tower UI)
+Contents of the playbook are as follows:
+
+```
+- name: Standalone Virtual Unmanaged Mode BIG-IP setup
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - variable.yaml
+
+  tasks:
+
+  - name: Add VLAN(s)
+    #Name of the ansible module
+    bigip_vlan: 
+      server: "{{bigip_ip}}"
+      user: "{{ bigip_username }}"
+      password: "{{ bigip_password }}"
+      name: "{{tenant_name_aci}}_{{item.name}}"
+      tag: "{{item.id}}"
+      untagged_interfaces:
+      - "{{item.interface}}"
+      validate_certs: "no"
+    with_items: "{{vlan_information}}"
+
+  - name: Add SELF-IP(s)
+    bigip_selfip:
+     server: "{{bigip_ip}}"
+     user: "{{ bigip_username }}"
+     password: "{{ bigip_password }}"
+     name: "{{tenant_name_aci}}_{{item.name}}"
+     address: "{{item.address}}"
+     netmask: "{{item.netmask}}"
+     vlan: "{{tenant_name_aci}}_{{item.vlan}}"
+     validate_certs: "no"
+    with_items: "{{ bigip_selfip_information }}"
+
+  - name: Add route(s)
+    bigip_static_route:
+      server: "{{bigip_ip}}"
+      user: "{{ bigip_username }}"
+      password: "{{ bigip_password }}"
+      name: "{{item.name}}"
+      gateway_address: "{{item.gw_address}}"
+      netmask: "{{item.netmask}}"
+      destination: "{{item.destination}}"
+      validate_certs: "no"
+    with_items: "{{static_route}}"
+    delegate_to: localhost
+
+  - name: Create nodes
+    bigip_node:
+      server: "{{ bigip_ip }}"
+      user: "{{ bigip_username }}"
+      password: "{{ bigip_password }}"
+      host: "{{item.host}}"
+      name: "{{item.host}}"
+      validate_certs: "no"
+    with_items: "{{pool_members}}"
+    delegate_to: localhost
+
+  - name: Create pool
+    bigip_pool:
+      server: "{{ bigip_ip }}"
+      user: "{{ bigip_username }}"
+      password: "{{ bigip_password }}"
+      name: "{{tenant_name_aci}}_{{pool_name}}"
+      lb_method: "round-robin"
+      monitors: "/Common/http"
+      monitor_type: "and_list"
+      validate_certs: "no"
+    delegate_to: localhost
+
+  - name: Add Pool members
+    bigip_pool_member:
+      server: "{{ bigip_ip }}"
+      user: "{{ bigip_username }}"
+      password: "{{ bigip_password }}"
+      state: "present"
+      name: "{{item.host}}"
+      host: "{{item.host}}"
+      port: "{{item.port}}"
+      pool: "{{tenant_name_aci}}_{{pool_name}}"
+      validate_certs: "no"
+    with_items: "{{pool_members}}"
+    delegate_to: localhost
+
+  - name: Add Virtual Server
+    bigip_virtual_server:
+      server: "{{ bigip_ip }}"
+      user: "{{ bigip_username }}"
+      password: "{{ bigip_password }}"
+      name: "{{tenant_name_aci}}_{{ldev_name_aci}}_{{vip_name}}"
+      destination: "{{vip_ip}}"
+      port: "{{vip_port}}"
+      enabled_vlans:
+       - "{{tenant_name_aci}}_{{vlan_information[0]['name']}}"
+      all_profiles:
+       - http
+      pool: "{{tenant_name_aci}}_{{pool_name}}"
+      snat: "{{snat}}"
+      validate_certs: "no"
+    delegate_to: localhost
+```
+
+Any content with the {{}} is a variable that is being substitued from a variable file
+
+Example variable file
+
+```
+hostname: 'bigipve.local'
+student: 'studentxx'
+
+#APIC information
+tenant_name_aci: "UM_F5_Tenant"
+ldev_name_aci: "BIGP_VE"
+
+# Network information
+bigip_ip: "172.21.208.111"
+bigip_username: "admin"
+bigip_password: "cisco123"
+
+vlan_information:
+- name: "Internal_VLAN"
+  id: "1234"
+  interface: "1.1"
+
+bigip_selfip_information:
+- name: 'Internal-SelfIP'
+  address: '69.2.103.10'
+  netmask: '255.255.255.0'
+  vlan: "{{vlan_information[0]['name']}}"
+
+static_route:
+- name: "default"
+  gw_address: "69.2.103.1"
+  destination: "0.0.0.0"
+  netmask: "0.0.0.0"
+
+vip_name: "http_vs"
+vip_port: "80"
+vip_ip: "69.2.103.11"
+snat: "Automap" #Options: none/automap/snat-pool name
+
+pool_name: "web-pool"
+pool_members:
+- port: "80"
+  host: "69.2.3.100"
+- port: "80"
+  host: "69.2.3.101"
+
+```
+<< Stop - Added by Payal >>
+
+Click on the rocket icon to execute the playbook to provision the BIGIP: 
 
 ![ansible tower](../img/ansibletowerrocket.png)
 
