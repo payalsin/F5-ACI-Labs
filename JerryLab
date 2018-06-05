@@ -481,7 +481,23 @@ On the right Navigation menu, click the **Local Traffic -> Virtual Servers** and
 
 ![VIP](../img/viplab2pbr.png)
 
-In the **Virtual Server List**, click the **Name** in the hyperlink and you will see the **Properties** of the Virtual Server with more detailed information. Scroll down and you should notice the Source Address Translation option is now set to **None**.
+<<Start - Added by payal >>
+In the **Virtual Server List**, click the **Name** in the hyperlink and you will see the **Properties** of the Virtual Server with more detailed information. Scroll down and you should notice the Source Address Translation option is set to **Automap**.
+
+Let's execute the job template using Ansible tower to modify the Source address translation parameters from Automap to None.
+
+Go to Ansible Tower -> Templates -> podxx. Scroll to the bottom where you see 'EXTRA VARIABLES' text box. Enter the value
+snat: "None" 
+
+Save the template
+
+![](../img/modifyTowerTemplate.png)
+
+Then launch the template using the rocket sign
+
+Go back to the BIG-IP, not you will see the source address translation paramters is modified from **Automap** to **None**
+
+<<Stop - Payal Added>>
 
 ![VIP 1](../img/lab2pbr-vip-1.png)
 
