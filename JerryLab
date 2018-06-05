@@ -83,7 +83,7 @@ Click **UPDATE** to accept the second logical interface’s configuration.
 
 Click **FINISH** to accept the L4-L7 Devices configuration.
 
-##Provisioning the BigIP using Ansible
+##Provisioning the BIGIP using Ansible
 
 We will provision the ADC using Ansible for a couple of reasons. Ansible is an open source automation platform that can help with configuration management, application deployment, and task automation. It can also do IT orchestration, where you have to run tasks in sequence and create a chain of events which must happen on several different servers or devices.
 
@@ -497,7 +497,7 @@ Then launch the template using the rocket sign
 
 Go back to the BIG-IP, not you will see the source address translation paramters is modified from **Automap** to **None**
 
-<<Stop - Payal Added>>
+<<Stop - Payal by Added>>
 
 ![VIP 1](../img/lab2pbr-vip-1.png)
 
