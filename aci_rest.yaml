@@ -3,6 +3,9 @@
   connection: local
   gather_facts: false
 
+  vars_files:
+   - varaible.yaml
+   
   tasks:
 
   - name: Create XML template for contract
