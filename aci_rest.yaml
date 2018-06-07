@@ -1,0 +1,28 @@
+- name: ACI Setup
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+  - name: Create XML template for contract
+    template: src=contract.j2 dest=contract.xml
+#  - name: Create XML template for bridge domain
+#    template: src=aci_posts/bridge_domain.j2 dest=aci_posts/bridge_domain.xml
+
+  - name: Execute POSTS (Contract, Export LDEV, Service Graph Template, Graph values, Device selection policy , Apply graph)
+    aci_rest:
+      action: "post"
+      uri: "/api/node/mo/uni/tn-CCC-Demo.xml"
+      config_file: "{{ item }}"
+      host: 10.192.73.30
+      username: admin
+      password: cisco123
+      validate_certs: "false"
+    with_items:
+     - "contract.xml"
+     #- "aci_posts/export_from_tenant.xml"
+     #- "aci_posts/service_graph_template.xml"
+     #- "aci_posts/graph_values.xml"
+     #- "aci_posts/deviceSelectionPolicy.xml"
+     #- "aci_posts/apply_graph.xml"
