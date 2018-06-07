@@ -1,0 +1,65 @@
+#APIC information
+tenant_name: "CCC-Demo"
+
+consumerBD_name: "ExternalBD"
+providerBD_name: "InternalBD"
+
+appProfile_name: "Opencart"
+consumerEPG_name: "Opencart-Ext"
+providerEPG_name: "Opencart-Int"
+
+logicalDeviceCluster_name: "CCC-BIG-IP-VE"
+vmm_domain_name: "vcenter"
+vm_name: "VN-BIG-IP-CCC-10.192.73.67"
+ldev_ext_interface_map_network_adaptor: "Network adapter 2"
+ldev_int_interface_map_network_adaptor: "Network adapter 3"
+
+SGtemplate_name: "CCC-VE-Unmanaged-2ARM-Graph"
+contract_name: "CCC-VE-Unmanaged-2ARM-Contract"
+
+## Onboarding BIG-IP ##
+onboarding: "yes" #Options: yes/no
+banner_text: "--------Standalone BIG-IP VE UnManaged ----------"
+
+hostname: 'ccc.bigipve.local'
+
+ntp_servers:
+ - '172.27.1.1'
+
+dns_servers:
+ - '8.8.8.8'
+ - '10.192.50.10'
+ip_version: 4
+
+module_provisioning:
+ - name: 'ltm'
+   level: 'nominal'
+
+# BIG-IP Network information
+bigip_ip: 10.192.73.67
+bigip_username: "admin"
+bigip_password: "admin"
+
+vlan_information:
+- name: "External_VLAN"
+  id: "28"
+  interface: "1.1"
+- name: "Internal_VLAN"
+  id: "29"
+  interface: "1.2"
+
+bigip_selfip_information:
+- name: 'External-SelfIP'
+  address: '10.168.59.67'
+  netmask: '255.255.255.0'
+  vlan: "{{vlan_information[0]['name']}}"
+- name: 'Internal-SelfIP'
+  address: '192.168.59.67'
+  netmask: '255.255.255.0'
+  vlan: "{{vlan_information[1]['name']}}"
+
+static_route:
+- name: "default"
+  gw_address: "192.168.59.1"
+  destination: "0.0.0.0"
+  netmask: "0.0.0.0"
