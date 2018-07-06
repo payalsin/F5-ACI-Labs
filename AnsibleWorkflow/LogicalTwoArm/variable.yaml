@@ -16,6 +16,7 @@ module_provisioning:
    level: 'nominal'
 
 #APIC information
+apic_ip: 10.192.73.30
 tenant_name: "Test_aci_posts"
 consumerBD_name: "externalBD"
 providerBD_name: "internalBD"
