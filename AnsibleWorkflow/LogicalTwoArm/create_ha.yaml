@@ -1,4 +1,14 @@
 ---
+- name: High Availability BIG-IP setup
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - variable.yaml
+
+  tasks:
+
   - name: Configure BIG-IP1 hostname
     bigip_hostname:
       server: "{{bigip1_ip}}"
