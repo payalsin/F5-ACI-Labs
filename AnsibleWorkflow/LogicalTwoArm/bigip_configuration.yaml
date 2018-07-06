@@ -91,7 +91,7 @@
      name: "{{tenant_name}}_{{item.name}}"
      address: "{{item.address}}"
      netmask: "{{item.netmask}}"
-     vlan: "{{tenant_name_aci}}_{{item.vlan}}"
+     vlan: "{{tenant_name}}_{{item.vlan}}"
      validate_certs: "no"
     with_items: "{{ bigip1_selfip_information }}"
 
@@ -103,7 +103,7 @@
      name: "{{tenant_name}}_{{item.name}}"
      address: "{{item.address}}"
      netmask: "{{item.netmask}}"
-     vlan: "{{tenant_name_aci}}_{{item.vlan}}"
+     vlan: "{{tenant_name}}_{{item.vlan}}"
      validate_certs: "no"
     with_items: "{{ bigip2_selfip_information }}"
     when: '"HA" in mode '
