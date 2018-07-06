@@ -23,7 +23,7 @@
       action: "post"
       uri: "/api/node/mo/uni/tn-{{tenant_name}}.xml"
       config_file: "{{ item }}"
-      host: "{{inventory_hostname}}"
+      host: "{{apic_ip}}"
       username: admin
       password: cisco123
       validate_certs: "false"
