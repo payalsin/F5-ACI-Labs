@@ -11,12 +11,12 @@
   - name: Create XML POSTS from templates
     template: src={{ item.src }} dest={{ item.dest }}
     with_items:
-      - { src: '../posts/ldev.j2',                       dest: '..posts/ldev.xml' }
-      - { src: '../posts/contract.j2',                   dest: '..posts/contract.xml' }
-      - { src: '../posts/service_graph_template.j2',     dest: '..posts/service_graph_template.xml'}
-      - { src: '../posts/deviceSelectionPolicy.j2',      dest: '..posts/deviceSelectionPolicy.xml'}
-      - { src: '../posts/apply_graph.j2',                dest: '..posts/apply_graph.xml'}
-      - { src: '../posts/attach_cons_prov_contract.j2',  dest: '..posts/attach_cons_prov_contract.xml'}
+      - { src: '../posts/ldev.j2',                       dest: '../posts/ldev.xml' }
+      - { src: '../posts/contract.j2',                   dest: '../posts/contract.xml' }
+      - { src: '../posts/service_graph_template.j2',     dest: '../posts/service_graph_template.xml'}
+      - { src: '../posts/deviceSelectionPolicy.j2',      dest: '../posts/deviceSelectionPolicy.xml'}
+      - { src: '../posts/apply_graph.j2',                dest: '../posts/apply_graph.xml'}
+      - { src: '../posts/attach_cons_prov_contract.j2',  dest: '../posts/attach_cons_prov_contract.xml'}
 
   - name: Execute POSTS
     aci_rest:
