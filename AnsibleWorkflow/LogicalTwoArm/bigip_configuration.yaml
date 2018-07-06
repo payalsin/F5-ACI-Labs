@@ -24,6 +24,9 @@
      - '"yes" in onboarding '
      - '"HA" in mode '
  
+  - include_tasks: ../common/create_ha.yaml 
+    when: '"HA" in mode '
+
   - name: Add VLAN(s) on BIG-IP1
     bigip_vlan:
       server: "{{bigip1_ip}}"
