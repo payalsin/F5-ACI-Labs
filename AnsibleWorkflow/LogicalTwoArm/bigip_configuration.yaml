@@ -1,4 +1,4 @@
-- name: High Availability Physical Unmanaged Mode BIG-IP setup
+- name: BIG-IP setup
   hosts: localhost
   connection: local
   gather_facts: false
