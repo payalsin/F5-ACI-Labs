@@ -21,7 +21,7 @@ tenant_name: "Testing_New_Posts"
 consumerBD_name: "externalBD"
 providerBD_name: "internalBD"
 
-appProfile_name: "AppProfile"
+appProfile_name: "ApplicationProfile"
 consumerEPG_name: "externalEPG"
 providerEPG_name: "internalEPG"
 
