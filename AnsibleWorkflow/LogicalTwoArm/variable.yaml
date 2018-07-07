@@ -17,7 +17,7 @@ module_provisioning:
 
 #APIC information
 apic_ip: 10.192.73.30
-tenant_name: "Testing_New_Posts"
+tenant_name: "AnsibleDemo"
 consumerBD_name: "externalBD"
 providerBD_name: "internalBD"
 
