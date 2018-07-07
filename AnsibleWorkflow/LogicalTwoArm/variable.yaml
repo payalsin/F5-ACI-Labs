@@ -38,8 +38,8 @@ provider_vlan: "1199"
 vmm_domain_name: 'vcenter'
 device1_vm_name: 'Payal_BIG-IP VE1-10.192.73.180'
 device2_vm_name: 'Payal_BIG-IP VE2-10.192.73.181'
-ldev_int_interface_map_network_adaptor: 'Network adapter 2'
-ldev_ext_interface_map_network_adaptor: 'Network adapter 3'
+ldev_ext_interface_map_network_adaptor: 'Network adapter 2'
+ldev_int_interface_map_network_adaptor: 'Network adapter 3'
 
 #Physical
 device1_interface1_connectionPath: "pod-1/paths-102/pathep-[eth1/34]"
