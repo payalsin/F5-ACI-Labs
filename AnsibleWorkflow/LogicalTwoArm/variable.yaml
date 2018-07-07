@@ -31,8 +31,8 @@ contract_name: "2ARM-Contract"
 device_type: 'physical'
 mode: 'HA'
 logicalDeviceCluster_name: "BIGIP_HA_PHY"
-consumer_vlan: "2693"
-provider_vlan: "2694"
+consumer_vlan: "1198"
+provider_vlan: "1199"
 
 #Virtual
 vmm_domain_name: 'vcenter'
