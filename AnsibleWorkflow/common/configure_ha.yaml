@@ -28,7 +28,7 @@
       - "{{item.interface}}"
       validate_certs: "no"
     with_items: "{{ha_vlan_information}}"
-    when: '"physical" in mode '
+    when: '"physical" in device_type '
 
   - name: Add HA VLAN(s) on BIG-IP2
     bigip_vlan:
@@ -41,7 +41,7 @@
       - "{{item.interface}}"
       validate_certs: "no"
     with_items: "{{ha_vlan_information}}"
-    when: '"physical" in mode '
+    when: '"physical" in device_type '
 
   - name: Add HA VLAN(s) on BIG-IP1
     bigip_vlan:
@@ -54,7 +54,7 @@
       - "{{item.interface}}"
       validate_certs: "no"
     with_items: "{{ha_vlan_information}}"
-    when: '"virtual" in mode '
+    when: '"virtual" in device_type '
 
   - name: Add HA VLAN(s) on BIG-IP2
     bigip_vlan:
@@ -67,7 +67,7 @@
       - "{{item.interface}}"
       validate_certs: "no"
     with_items: "{{ha_vlan_information}}"
-    when: '"virtual" in mode '
+    when: '"virtual" in device_type '
 
   - name: Add HA SELF-IP(s) on BIG-IP1
     bigip_selfip:
