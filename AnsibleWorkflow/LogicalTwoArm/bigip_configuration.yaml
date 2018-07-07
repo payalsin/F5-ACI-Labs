@@ -120,6 +120,7 @@
      traffic_group: "traffic-group-1"
      validate_certs: "no"
     with_items: "{{ floating_selfip_information }}"
+    when: '"HA" in mode '
 
   - name: Add route(s) on BIG-IP1
     bigip_static_route:
