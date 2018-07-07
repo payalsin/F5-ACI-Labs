@@ -29,7 +29,7 @@ SGtemplate_name: "SGT_BIGIP_VE"
 contract_name: "2ARM-Contract_VE"
 
 device_type: 'virtual'
-mode: 'SA'
+mode: 'HA'
 logicalDeviceCluster_name: "BIGIP_HA_VE"
 consumer_vlan: "1198"
 provider_vlan: "1199"
