@@ -64,7 +64,8 @@ bigip2_hostname: bigipha2.local
 ha_vlan_information:
 - name: "HA_VLAN"
   id: "3"
-  interface: "2.4"
+  #interface: "2.4"
+  interface: "1.3"
 
 bigip1_ha_selfip: 
 - name: "HA_SELF-IP"
@@ -81,10 +82,12 @@ bigip2_ha_selfip:
 vlan_information:
 - name: "External_VLAN"
   id: "{{consumer_vlan}}"
-  interface: "2.2"
+  #interface: "2.2"
+  interface: "1.1"
 - name: "Internal_VLAN"
   id: "{{provider_vlan}}"
-  interface: "2.2"
+  #interface: "2.2"
+  interface: "1.2"
 
 bigip1_selfip_information:
 - name: 'External-SelfIP'
