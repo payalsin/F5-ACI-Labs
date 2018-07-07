@@ -1,6 +1,6 @@
 ## Onboarding BIG-IP ##
 onboarding: "yes" #Options: yes/no
-banner_text: "---HA BIG-IP Phy UnManaged ---"
+banner_text: "---BIG-IP APIC UnManaged Mode ---"
 
 ntp_servers:
  - '172.27.1.1'
