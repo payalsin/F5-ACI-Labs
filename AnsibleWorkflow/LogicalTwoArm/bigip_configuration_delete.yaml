@@ -75,6 +75,6 @@
       validate_certs: "no"
     with_items: "{{vlan_information}}"
     when: '"HA" in mode '
-	
+    
   - include_tasks: ../common/destroy_ha.yaml 
     when: '"HA" in mode '
