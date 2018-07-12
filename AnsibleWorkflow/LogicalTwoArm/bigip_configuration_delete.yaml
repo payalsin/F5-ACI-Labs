@@ -33,7 +33,7 @@
      state: absent
      validate_certs: "no"
     with_items: "{{ floating_selfip_information }}"
-    when: '"HA" in mode 
+    when: '"HA" in mode '
     
   - name: Delete SELF-IP(s) on BIG-IP1
     bigip_selfip:
