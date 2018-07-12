@@ -76,5 +76,5 @@
     with_items: "{{vlan_information}}"
     when: '"HA" in mode '
 	
-  - include_tasks: destroy_ha.yaml 
+  - include_tasks: ../common/destroy_ha.yaml 
     when: '"HA" in mode '
