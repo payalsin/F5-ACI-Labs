@@ -29,11 +29,12 @@
      server: "{{bigip1_ip}}"
      user: "{{ bigip1_username }}"
      password: "{{ bigip1_password }}"
-     name: "{{tenant_name_aci}}_{{item.name}}"
+     name: "{{tenant_name}}_{{item.name}}"
      state: absent
      validate_certs: "no"
     with_items: "{{ floating_selfip_information }}"
-
+    when: '"HA" in mode 
+    
   - name: Delete SELF-IP(s) on BIG-IP1
     bigip_selfip:
      server: "{{bigip1_ip}}"
