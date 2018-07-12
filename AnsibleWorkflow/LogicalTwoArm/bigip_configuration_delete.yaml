@@ -53,7 +53,7 @@
      name: "{{tenant_name}}_{{item.name}}"
      state: absent
      validate_certs: "no"
-    with_items: "{{ bigip2_selfip_information }}"       
+    with_items: "{{ bigip2_selfip_information }}"
     when: '"HA" in mode '
     
   - name: Delete VLAN(s) on BIG-IP1
