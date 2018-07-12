@@ -1,7 +1,7 @@
 ###Parameters that can be entered throught tower survey or used in the variable file###
 
 #BIG-IP being configured is virtual or physical
-device_type: 'physical'
+device_type: 'virtual'
 #BIG-IP is in HA or SA mode
 mode: 'HA'
 
