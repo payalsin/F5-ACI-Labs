@@ -8,17 +8,15 @@
   
   tasks:
 
-  - name: Create XML template to delete contract
-    template: src=delete_contract.j2 dest=delete_contract.xml
-  - name: Create XML template to detach contract
-    template: src=detach_contract.j2 dest=detach_contract.xml#
-  - name: Create XML template for delete_deviceSelectionPolicy
-    template: src=delete_deviceSelectionPolicy.j2 dest=delete_deviceSelectionPolicy.xml
-  - name: Create XML template for delete_service_graph_template
-    template: src=delete_service_graph_template.j2 dest=delete_service_graph_template.xml
-  - name: Create XML template for delete_unmanaged_ve_ldev
-    template: src=delete_unmanaged_ve_ldev.j2 dest=delete_unmanaged_ve_ldev.xml
-  
+  - name: Create XML posts from templates
+    template: src={{ item.src }} dest={{ item.dest }}
+    with_items:
+      - { src: '../delete_posts/ldev.j2',                       dest: '../delete_posts/ldev.xml' }
+      - { src: '../delete_posts/contract.j2',                   dest: '../delete_posts/contract.xml' }
+      - { src: '../delete_posts/service_graph_template.j2',     dest: '../delete_posts/service_graph_template.xml'}
+      - { src: '../delete_posts/deviceSelectionPolicy.j2',      dest: '../delete_posts/deviceSelectionPolicy.xml'}
+      - { src: '../delete_posts/apply_graph.j2',                dest: '../delete_posts/apply_graph.xml'}
+      - { src: '../delete_posts/attach_cons_prov_contract.j2',  dest: '../delete_posts/attach_cons_prov_contract.xml'}
   
   - name: Execute DELETE (Contract, Apply Contract to EPG, Create LDEV, Service Graph Template, Device selection policy , Apply graph)
     aci_rest:
@@ -30,8 +28,8 @@
       password: "{{apic_password}}"
       validate_certs: "false"
     with_items:
-     - "delete_contract.xml"
-     - "detach_contract.xml"
-     - "delete_deviceSelectionPolicy.xml"
-     - "delete_service_graph_template.xml"
-     - "delete_ldev.xml"
+     - "../delete_posts/delete_contract.xml"
+     - "../delete_posts/detach_contract.xml"
+     - "../delete_posts/delete_deviceSelectionPolicy.xml"
+     - "../delete_posts/delete_service_graph_template.xml"
+     - "../delete_posts/delete_ldev.xml"
