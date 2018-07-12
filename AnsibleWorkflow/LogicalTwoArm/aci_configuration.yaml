@@ -24,8 +24,8 @@
       uri: "/api/node/mo/uni/tn-{{tenant_name}}.xml"
       config_file: "{{ item }}"
       host: "{{apic_ip}}"
-      username: admin
-      password: cisco123
+      username: "{{apic_username}}"
+      password: "{{apic_password}}"
       validate_certs: "false"
     with_items:
      - "../posts/ldev.xml"
