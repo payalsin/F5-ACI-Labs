@@ -11,12 +11,11 @@
   - name: Create XML posts from templates
     template: src={{ item.src }} dest={{ item.dest }}
     with_items:
-      - { src: '../delete_posts/ldev.j2',                       dest: '../delete_posts/ldev.xml' }
-      - { src: '../delete_posts/contract.j2',                   dest: '../delete_posts/contract.xml' }
-      - { src: '../delete_posts/service_graph_template.j2',     dest: '../delete_posts/service_graph_template.xml'}
-      - { src: '../delete_posts/deviceSelectionPolicy.j2',      dest: '../delete_posts/deviceSelectionPolicy.xml'}
-      - { src: '../delete_posts/apply_graph.j2',                dest: '../delete_posts/apply_graph.xml'}
-      - { src: '../delete_posts/attach_cons_prov_contract.j2',  dest: '../delete_posts/attach_cons_prov_contract.xml'}
+      - { src: '../delete_posts/delete_ldev.j2',                   dest: '../delete_posts/delete_ldev.xml' }
+      - { src: '../delete_posts/delete_contract.j2',               dest: '../delete_posts/delete_contract.xml' }
+      - { src: '../delete_posts/delete_service_graph_template.j2', dest: '../delete_posts/delete_service_graph_template.xml'}
+      - { src: '../delete_posts/delete_deviceSelectionPolicy.j2',  dest: '../delete_posts/delete_deviceSelectionPolicy.xml'}
+      - { src: '../delete_posts/detach_contract.j2',               dest: '../delete_posts/detach_contract.xml'}
   
   - name: Execute DELETE (Contract, Apply Contract to EPG, Create LDEV, Service Graph Template, Device selection policy , Apply graph)
     aci_rest:
