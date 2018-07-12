@@ -56,10 +56,10 @@ appProfile_name: "ApplicationProfile"
 consumerEPG_name: "externalEPG"
 providerEPG_name: "internalEPG"
 
-SGtemplate_name: "SGT_BIGIP_VE"
-contract_name: "2ARM-Contract_VE"
+SGtemplate_name: "SGT_BIGIP_PHY"
+contract_name: "2ARM-Contract_PHY"
 
-logicalDeviceCluster_name: "BIGIP_HA_VE"
+logicalDeviceCluster_name: "BIGIP_HA_PHY"
 consumer_vlan: "1198"
 provider_vlan: "1199"
 
