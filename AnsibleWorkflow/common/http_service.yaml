@@ -45,17 +45,17 @@
       server: "{{ bigip_ip }}"
       user: "{{ bigip_username }}"
       password: "{{ bigip_password }}"
-      name: "{{tenant_name}}_{{logicalDeviceCluster_name}}_{{item.vip_name}}"
-      destination: "{{item.vip_ip}}"
-      port: "{{item.vip_port}}"
+      name: "{{tenant_name}}_{{logicalDeviceCluster_name}}_{{item.0.vip_name}}"
+      destination: "{{item.0.vip_ip}}"
+      port: "{{item.0.vip_port}}"
       enabled_vlans:
        - "{{tenant_name}}_{{vlan_information[0]['name']}}"
        - "{{tenant_name}}_{{vlan_information[1]['name']}}"
       all_profiles: "{{item.1}}"
-      pool: "{{tenant_name}}_{{item.pool_name}}"
-      snat: "{{item.snat}}"
+      pool: "{{tenant_name}}_{{item.0.pool_name}}"
+      snat: "{{item.0.snat}}"
       validate_certs: "no"
-    with_subelements: 
+    with_subelements:
      - "{{vips}}"
      - profiles
     delegate_to: localhost
