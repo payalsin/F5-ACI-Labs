@@ -55,6 +55,7 @@
        - http
       pool: "{{tenant_name}}_{{item.pool_name}}"
       snat: "{{item.snat}}"
+      all_profiles: "{{ profiles | default(omit) }}"
       validate_certs: "no"
     with_items: "{{vips}}"
     delegate_to: localhost
