@@ -1,15 +1,15 @@
 - name: Create nodes
-    bigip_node:
+  bigip_node:
       server: "{{ bigip_ip }}"
       user: "{{ bigip_username }}"
       password: "{{ bigip_password }}"
       host: "{{item.1.host}}"
       name: "{{item.1.host}}"
       validate_certs: "no"
-    with_subelements:
+   with_subelements:
      - "{{ pools }}"
      - pool_members
-    delegate_to: localhost
+   delegate_to: localhost
 
   - name: Create pool
     bigip_pool:
