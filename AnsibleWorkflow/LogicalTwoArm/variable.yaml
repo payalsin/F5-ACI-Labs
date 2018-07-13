@@ -178,9 +178,9 @@ vips:
 pools:
 - pool_name: "https-pool"
   pool_members:
-   - port: "443"
+   - port: "80"
      host: "192.168.56.140"
-   - port: "443"
+   - port: "80"
      host: "192.168.56.141"
 - pool_name: "http-pool"
   pool_members:
