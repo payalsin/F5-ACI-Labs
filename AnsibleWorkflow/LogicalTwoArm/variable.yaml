@@ -164,12 +164,17 @@ vips:
   vip_ip: "10.168.56.105"
   snat: "Automap"  #Options: none/automap/snat-pool namea
   pool_name: "https-pool"
+  profiles:
+   - http
+   - clientssl
 - vip_name: "http"
   vip_port: "80"
   vip_ip: "10.168.56.106"
   snat: "Automap"
   pool_name: "http-pool"
-
+  prfoiles:
+   - http
+   
 pools:
 - pool_name: "https-pool"
   pool_members:
