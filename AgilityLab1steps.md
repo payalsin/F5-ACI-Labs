@@ -131,31 +131,17 @@ Let’s log into the F5 BIG-IP **{TBIGIPIP}** with the following username and pa
 * Username: **admin**  
 * Password: **cisco123**  
 
-![F5 BigIP](../img/f5bigip.png)
-
 On the **Main** menu click **Local Traffic -> Network Map**. You should be able to see the virtual server is created along with its pool and pool members.
-
-![Network Map](../img/netmap.png)
 
 On the left Navigation menu, click the **Local Traffic -> Virtual Servers** and you should be able to see the brief Virtual IP information. You can see that the VIP is currently listening on HTTP port 80.
 
-![VIP 1](../img/vip-1.png)
-
 In the **Virtual Server List**, click the **Name** in the hyperlink and you will see the **Property** of the Virtual Server with more detailed information. The configured the parameters will appear here. 
-
-![VIP 1](../img/vip-2.png)
 
 Click the **Resources** tab and you should see the both **Default** and **Fallback** persistence profiles are set to **None**.  
 
-![VIP 2](../img/vip-3.png)
-
 Click **Local Traffic -> Pools** and you should see the brief information of the real server pool information:
 
-![Pool](../img/pool.png)
-
 Click the hyperlink under **Name** and you should be directed to the Pool **Properties** page. Now click the **Members** tab and you should see the real servers (pool members) we configured when we were deploying the service graph.
-
-![Pool Member](../img/pool-member.png)
 
 Go to your RDP command line and ping **{TL2F5VIP}** (VIP). This should succeed.
 
@@ -165,41 +151,6 @@ URL: **[http://{TL2F5VIP}](http://{TL2F5VIP})**
 
 You should see the page with the hostname of your VMs similar to the following:   
 	
-![Page 1](../img/page1.png)
-
 Press the enter button (do not use the refresh button of your browser) at the IP address **{TL2F5VIP}** at the web browser, you should see a different page and the VIP is load balanced by the ADC.
-
-![Page 2](../img/page2.png)
-
-Now that we have verified connectivity to the web server via the ADC VIP, let's inspect the web server and see which client IP is in the access log.
-
-Use the Putty SSH client in your RDP and connect to the first web server VM and verify its access log entries. For example, you can SSH into VM, {TSTUDENT}-vm02, via its L2 only network connection by using the following:
-
-IP address: **{TVM2L2}**  
-Username: **student**  
-Password: **ciscolive.2018**  
-
-After logged in, issue the following command:  
-
-```
-tail -f /var/log/httpd/access_log
-```
-
-You should see an output similar to the following:  
-
-```
-{TL2F5INTSIP} - - [06/Feb/2018:20:11:52 -0500] "GET /" 200 770 "-" "-"
-{TL2F5INTSIP} - - [06/Feb/2018:20:11:56 -0500] "GET /" 200 770 "-" "-"
-```
-
-This is the HTTP health probe from the Big-IP. Let's use the web browser in your RDP session to browse the web server via the ADC VIP for multiple times. You should see the browser switch between VM2 and VM3.
-
-Now, let's inspect the HTTP access log and you will notice an output similar to the following:  
-
-```
-199.253.253.12 - - [07/Feb/2017:22:29:07 -0500] "GET / HTTP/1.1" 200 770 "-" "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36"
-```  
-
-The IP address in the HTTP access log contains the client's IP in the HTTP request.
 
 >**Congratulations! This session of the lab is completed, please proceed to the next lab session via the menu**
