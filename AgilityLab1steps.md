@@ -73,36 +73,36 @@ logicalDeviceCluster_name: "sxx-bigip"
 
 vlan_information:
 - name: "VLAN"
-  id: "1234"		#Vlan ID
-  interface: "1.1"  #Interface on BIG-IP to which the VLAN is untagged
+  id: "1234"					#Vlan ID
+  interface: "1.1"      			#Interface on BIG-IP to which the VLAN is untagged
 
 bigip_selfip_information:
 - name: 'SelfIP'
-  address: '69.2.101.10'					#Self-IP address
+  address: '69.2.101.10'			#Self-IP address
   netmask: '255.255.255.0'  
   vlan: "{{vlan_information[0]['name']}}"	#VLAN to be assinged to the BIG-IP
 
 static_route:
 - name: "default"
-  gw_address: "69.2.101.1"	#Default gateway assigned on the BIG-IP
+  gw_address: "69.2.101.1"			#Default gateway assigned on the BIG-IP
   destination: "0.0.0.0"
   netmask: "0.0.0.0"
 
 pools:
-- pool_name: "http-pool"	#Pool name
-  pool_members:				#Members belonging to the BIG-IP Pool
+- pool_name: "http-pool"			#Pool name
+  pool_members:					#Members belonging to the BIG-IP Pool
    - port: "80"
      host: "69.2.1.100"
    - port: "80"
      host: "69.2.1.101"
 	 
 vips:
-- vip_name: "http"			#Virtual IP Name
+- vip_name: "http"				#Virtual IP Name
   vip_port: "80"
-  vip_ip: "69.2.101.11"		#IP address where the client traffic will be directed to
-  snat: "automap"			#SNAT set to automap, so that return traffic is forced back to the BIG-IP
-							#No changes needed on the network routing on the backend servers (pool members)
-  pool_name: "http-pool"	#Pool to be assigned to the VIP
+  vip_ip: "69.2.101.11"				#IP address where the client traffic will be directed to
+  snat: "automap"				#SNAT set to automap, so that return traffic is forced back to the BIG-IP
+						#No changes needed on the network routing on the backend servers (pool members)
+  pool_name: "http-pool"			#Pool to be assigned to the VIP
   profiles:					#Profiles to be assigned to the VIP
    - http
 ```
