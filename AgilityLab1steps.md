@@ -19,10 +19,9 @@ Connect to the Ansible tower using the following information:
 * **password**: cisco123
 
 Once you are logged in click on **Projects** located in the top level menu
-Click on 'Lab-Git-Project'. This is a view only permission.
-The SCM URL defines the Github repo from where the playbooks and other content is being pulled from.
-
-Click on **Templates** located in the top level menu: 
+* Click on **'Lab-Git-Project'**. This is a view only permission.
+* The SCM URL defines the Github repo from where the playbooks and other content is being pulled from.
+* Click on **Templates** located in the top level menu: 
 
 ![ansible tower](../img/ansibletowertemplate.png)
 
@@ -112,6 +111,7 @@ This will launch the playbook. A survey will pop up when the rocket button is cl
 The survey is an Ansible Tower feature to allow users to provide input to the playbook while executing the playbook. These are variables passed to the playbook along with the input provided in the 'Extra Variables' text box earlier.
 
 In the Survey enter the following:
+```
 BIG-IP - device type = 'virtual'
 BIG-IP - High Availability or Stand Alone = "SA"
 BIG-IP - Do you want to on-board? = 'yes'
@@ -122,6 +122,7 @@ BIG-IP password = 'cisco123'
 APIC IPAddress = '172.21.208.173'
 APIC username = 'studentxx'
 APIC password = 'ciscolive.2018'
+```
 
 ## Verifying the BIG-IP Deployment
 
