@@ -99,8 +99,7 @@ vips:
 - vip_name: "http"				#Virtual IP Name
   vip_port: "80"
   vip_ip: "69.2.101.11"				#IP address where the client traffic will be directed to
-  snat: "automap"				#SNAT set to automap, so that return traffic is forced back to the BIG-IP
-						#No changes needed on the network routing on the backend servers (pool members)
+  snat: "none"				
   pool_name: "http-pool"			#Pool to be assigned to the VIP
   profiles:					#Profiles to be assigned to the VIP
    - http
