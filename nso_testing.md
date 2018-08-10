@@ -268,14 +268,14 @@ After adding node 2, you should see two nodes under **/load-balancer/pool/member
 
 ![](/build/sections/Lab%202%20-%20NSO/images/NSO-sm-lb-poolmember3.png)
 
-**Now before we commit the configuration we are going to sync the cisco-apic configuration with the NSO**
+>**Now before we commit the configuration we are going to sync the cisco-apic configuration with the NSO**
 
 * Click on the cisco icon on the top left corner
 * Click on the Device Manager tab
 * Check box for device 'cisco-apic'
 * Expand the running man icon and click 'sync-from'
 
-<<IMAGE>>
+![](/build/sections/Lab%202%20-%20NSO/images/NSO-beforecommitsync.png)
 
 **Now we are going to commit the configuration**
 
@@ -455,14 +455,14 @@ Click on **Service Manager** located on the dashboard.
 
 ![](/build/sections/Lab%202%20-%20NSO/images/NSO-cleanup-commit1.png)
 
-**Now before we commit the configuration we are going to sync the cisco-apic configuration with the NSO  
+>**Now before we commit the configuration we are going to sync the cisco-apic configuration with the NSO  
 
 * Click on the cisco icon on the top left corner
 * Click on the Device Manager tab
 * Check box for device 'cisco-apic'
 * Expand the running man icon and click 'sync-from'
 
-<<IMAGE>>
+![](/build/sections/Lab%202%20-%20NSO/images/NSO-beforecommitsync.png)
 
 Click on the **Cisco** icon on the top left corner to go back to the dashboard
 
