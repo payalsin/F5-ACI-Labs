@@ -5,7 +5,7 @@
 
   vars:
     machine:
-      username: '{{ ansible_user }}'
+      username: '{{ ansible_userame }}'
       password: '{{ ansible_password }}'
       
   tasks:
