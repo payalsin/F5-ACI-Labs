@@ -2,17 +2,8 @@
   hosts: aci
   connection: local
   gather_facts: false
-
-  vars:
-    machine:
-      username: '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
-      password: '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       
   tasks:
-
-  - name: creds
-    debug:
-        var: machine
 
   - name: Create XML POSTS from templates
     template: src={{ item.src }} dest={{ item.dest }}
@@ -30,8 +21,8 @@
       uri: "/api/node/mo/uni/tn-{{tenant_name}}.xml"
       config_file: "{{ item }}"
       host: "{{inventory_hostname}}"
-      username: "{{ansible_user}}"
-      password: "{{ansible_password}}"
+      username: "{{ lookup("env", "ANSIBLE_NET_USERNAME") }}"
+      password: "{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}"
       validate_certs: "false"
     with_items:
      - "combined_ldev.xml"
