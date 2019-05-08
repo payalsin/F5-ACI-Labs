@@ -1,4 +1,4 @@
-- name: ACI Setup
+- name: Configure ACI
   hosts: aci
   connection: local
   gather_facts: false
