@@ -21,8 +21,8 @@
       uri: "/api/node/mo/uni/tn-{{tenant_name}}.xml"
       config_file: "{{ item }}"
       host: "{{inventory_hostname}}"
-      username: "{{ lookup("env", "ANSIBLE_NET_USERNAME") }}"
-      password: "{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}"
+      username: '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+      password: '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
     with_items:
      - "combined_ldev.xml"
