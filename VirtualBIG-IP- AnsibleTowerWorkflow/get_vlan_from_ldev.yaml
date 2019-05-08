@@ -1,0 +1,32 @@
+- name: ACI 
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+   tenant_name: 'AnsibleDemo'
+   ldev_name: 'LDC_BIGIP_VE'
+   lIf_name: 'lIf-External'
+   
+  tasks:
+
+  - name: Get VLAN information from a Physical Logical Device Cluster
+    aci_rest:
+      action: "get"
+      #uri: "/api/node/mo/uni/tn-{{tenant_name}}/lDevVip-{{ldev_name}}.json?query-target=subtree&target-subtree-class=vnsLIf"
+      uri: "/api/node/mo/uni/tn-AnsibleDemo/GraphInst_C-[uni/tn-AnsibleDemo/brc-Unmanaged-2ARM-Contract]-G-[uni/tn-AnsibleDemo/AbsGraph-SGT_BIGIP_VE]-S-[uni/tn-common/ctx-default]/NodeInst-N1.json?query-target=subtree&target-subtree-class=vnsEPgDef"
+      #Example: uri: "/api/node/mo/uni/tn-Test_aci_posts/lDevVip-LDC_BIGIP_VE.json?query-target=subtree&target-subtree-class=vnsLIf"
+      host: 10.192.73.50
+      username: admin
+      password: cisco123
+      validate_certs: "false"
+    register: vlan
+
+  - name: debug
+    debug: msg="{{vlan}}"
+
+  #- name: debug
+  #  debug: msg="{{(vlan.imdata[0]['vnsLIf']['attributes']['encap']).split('-')[1]}}"
+    
+  #- name: debug
+  #  debug: msg="{{(vlan.imdata[0]['vnsLIf']['attributes']['encap']).split('-')[1]}}"
