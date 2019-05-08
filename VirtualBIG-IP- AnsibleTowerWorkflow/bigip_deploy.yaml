@@ -33,7 +33,7 @@
     set_fact:
      provider:
       server: "{{bigip}}"
-      username: "{{bigip_username}}"
+      user: "{{bigip_username}}"
       password: "{{bigip_password}}"
       server_port: "443"
       validate_certs: "False"
