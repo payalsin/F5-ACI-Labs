@@ -54,7 +54,7 @@
       name: "{{item.name}}"
       tag: "{{item.encap}}"
       untagged_interfaces:
-      - "{{provider_interface}}"
+      - "{{consumer_interface}}"
     loop: "{{vlan_encap}}"
     when: 'item.name == "consumer"'
   
