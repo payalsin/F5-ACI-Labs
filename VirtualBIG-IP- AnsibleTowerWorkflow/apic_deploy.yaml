@@ -3,7 +3,16 @@
   connection: local
   gather_facts: false
 
+  vars:
+    machine:
+      username: '{{ ansible_user }}'
+      password: '{{ ansible_password }}'
+      
   tasks:
+
+  - name: creds
+    debug:
+        var: machine
 
   - name: Create XML POSTS from templates
     template: src={{ item.src }} dest={{ item.dest }}
