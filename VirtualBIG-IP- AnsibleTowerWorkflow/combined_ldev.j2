@@ -35,12 +35,12 @@
    {% endif %}
    
    {% if device_type=='virtual' %}
-   <vnsCDev name="Device1" vcenterName="{{vmm_domain_name}}" vmName="{{device1_vm_name}}">
+   <vnsCDev name="Device1" vcenterName="{{vcenter_name}}" vmName="{{device1_vm_name}}">
       <vnsCIf name="Internal" vnicName="{{ldev_int_interface_map_network_adaptor}}" />
       <vnsCIf name="External" vnicName="{{ldev_ext_interface_map_network_adaptor}}" />
    </vnsCDev>
     {% if mode=='HA' %}
-	 <vnsCDev name="Device2" vcenterName="{{vmm_domain_name}}" vmName="{{device2_vm_name}}">
+	 <vnsCDev name="Device2" vcenterName="{{vcenter_name}}" vmName="{{device2_vm_name}}">
       <vnsCIf name="Internal" vnicName="{{ldev_int_interface_map_network_adaptor}}" />
       <vnsCIf name="External" vnicName="{{ldev_ext_interface_map_network_adaptor}}" />
    </vnsCDev>
