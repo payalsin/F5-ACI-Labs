@@ -1,5 +1,5 @@
 - name: Configure ACI
-  hosts: sa_aci
+  hosts: aci
   connection: local
   gather_facts: false
       
