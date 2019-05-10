@@ -1,5 +1,5 @@
 - name: Configure BIG-IP 
-  hosts: all
+  hosts: aci_bigip
   connection: local
   gather_facts: false
 
@@ -32,11 +32,12 @@
   - name: Setting up provider values
     set_fact:
      provider:
-      server: "{{hostvars['bigip'].inventory_hostname}}"
-      user: "{{hostvars['bigip'].username}}"
-      password: "{{hostvars['bigip'].password}}"
+      server: "{{hostvars[item].inventory_hostname}}"
+      user: "{{username}}"
+      password: "{{password}}"
       server_port: "443"
       validate_certs: "False"
+     loop: "{{ groups['bigip'] }}"
 
   - name: Add Provider VLAN
     bigip_vlan:

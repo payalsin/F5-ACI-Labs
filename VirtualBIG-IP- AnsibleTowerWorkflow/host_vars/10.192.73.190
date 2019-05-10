@@ -1,0 +1,12 @@
+consumer_interface: "1.1"
+provider_interface: "1.2"
+
+selfip_information:
+- name: 'External-SelfIP'
+  address: '10.168.68.10'
+  netmask: '255.255.255.0'
+  vlan: "consumer"
+- name: 'Internal-SelfIP'
+  address: '192.168.68.10'
+  netmask: '255.255.255.0'
+  vlan: "provider"
