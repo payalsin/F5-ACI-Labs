@@ -1,5 +1,5 @@
 - name: Configure BIG-IP 
-  hosts: aci-bigip
+  hosts: all
   connection: local
   gather_facts: false
 
