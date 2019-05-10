@@ -1,5 +1,5 @@
 - name: Configure BIG-IP 
-  hosts: aci_bigip
+  hosts: sa_aci
   connection: local
   gather_facts: false
 
@@ -32,12 +32,11 @@
   - name: Setting up provider values
     set_fact:
      provider:
-      server: "{{hostvars[item].inventory_hostname}}"
-      user: "{{username}}"
-      password: "{{password}}"
+      server: "{{bigip_ip}}"
+      user: "{{bigip_username}}"
+      password: "{{bigip_password}}"
       server_port: "443"
       validate_certs: "False"
-     loop: "{{ groups['bigip'] }}"
 
   - name: Add Provider VLAN
     bigip_vlan:
@@ -58,4 +57,12 @@
       - "{{consumer_interface}}"
     loop: "{{vlan_encap}}"
     when: 'item.name == "consumer"'
-  
+    
+  - name: Add SELF-IP(s)
+    bigip_selfip:
+     provider: "{{provider}}"
+     name: "{{item.name}}"
+     address: "{{item.address}}"
+     netmask: "{{item.netmask}}"
+     vlan: "{{item.vlan}}"
+    loop: "{{ selfip_information }}"
