@@ -1,5 +1,5 @@
 - name: Dynamic end point attach/dettach 
-  hosts: localhost
+  hosts: aci
   connection: local
   gather_facts: false
 
@@ -12,9 +12,9 @@
   - name: Setup provider
     set_fact:
      provider:
-      server: "10.192.73.219"
-      user: "admin"
-      password: "admin"
+      server: "{{bigip_ip}}"
+      user: "{{bigip_username}}"
+      password: "{{bigip_password}}"
       server_port: "443"
       validate_certs: "no"
 
@@ -22,9 +22,9 @@
     aci_rest:
       action: "get"
       uri: "/api/node/mo/uni/tn-{{tenant_name}}/ap-{{app_profile_name}}/epg-{{epg_name}}.json?query-target=subtree&target-subtree-class=fvIp"
-      host: "10.192.73.50"
-      username: "admin"
-      password: "cisco123"
+      host: "{{inventory_hostname}}"
+      username: '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+      password: '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
     register: eps
 
