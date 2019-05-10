@@ -1,5 +1,5 @@
 - name: Configure ACI
-  hosts: aci
+  hosts: aci-bigip
   connection: local
   gather_facts: false
       
