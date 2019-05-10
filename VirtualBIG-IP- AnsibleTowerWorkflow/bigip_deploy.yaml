@@ -32,9 +32,9 @@
   - name: Setting up provider values
     set_fact:
      provider:
-      server: "{{bigip}}"
-      user: "{{bigip_username}}"
-      password: "{{bigip_password}}"
+      server: "{{hostvars['bigip'].inventory_hostname}}"
+      user: "{{hostvars['bigip'].username}}"
+      password: "{{hostvars['bigip'].password}}"
       server_port: "443"
       validate_certs: "False"
 
