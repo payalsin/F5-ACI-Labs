@@ -14,15 +14,15 @@
       server_port: "443"
       validate_certs: "False"
 
-  - name: Create nodes
-    bigip_node:
-      provider: "{{provider}}"
-      host: "{{hostvars[item].inventory_hostname}}"
-      name: "{{hostvars[item].inventory_hostname}}"
-      monitors:
-      - icmp
-      monitor_type: "single"
-    loop: "{{ groups['webservers'] }}"
+ # - name: Create nodes
+ #   bigip_node:
+ #     provider: "{{provider}}"
+ #     host: "{{hostvars[item].inventory_hostname}}"
+ #     name: "{{hostvars[item].inventory_hostname}}"
+ #     monitors:
+ #     - icmp
+ #     monitor_type: "single"
+ #   loop: "{{ groups['webservers'] }}"
 
   - name: Create pool
     bigip_pool:
@@ -32,15 +32,15 @@
       monitors: "/Common/http"
       monitor_type: "and_list"
 
-  - name: Add Pool members
-    bigip_pool_member:
-      provider: "{{provider}}"
-      state: "present"
-      name: "{{hostvars[item].inventory_hostname}}"
-      host: "{{hostvars[item].inventory_hostname}}"
-      port: "80"
-      pool: "{{pool_name}}"
-    loop: "{{ groups['webservers'] }}"
+ # - name: Add Pool members
+ #   bigip_pool_member:
+ #     provider: "{{provider}}"
+ #     state: "present"
+ #     name: "{{hostvars[item].inventory_hostname}}"
+ #     host: "{{hostvars[item].inventory_hostname}}"
+ #     port: "80"
+ #     pool: "{{pool_name}}"
+ #   loop: "{{ groups['webservers'] }}"
 
   - name: Add Virtual Server
     bigip_virtual_server:
