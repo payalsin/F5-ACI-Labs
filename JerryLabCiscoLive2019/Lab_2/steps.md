@@ -209,6 +209,7 @@ The Deployed Graph Instances state should say **_applied_**.
 
 ##Provisioning the BIG-IP using the F5 ACI ServiceCenter  
 
+**Payal added**
 The F5 ACI ServiceCenter is a F5 developed ACI app which runs natively in Cisco’s APIC, providing administrator a unified way to manage both L2-L3 and L4-L7 infrastructure.The app offers enhanced ACI-to-BIG-IP visibility; L2-L3 network stitching capability; and L4-L7 application services to ACI workloads
 
 You can access the F5 ACI ServiceCenter installed for this lab by Navigating to the **Apps** in the APIC menu bar.  
@@ -323,6 +324,7 @@ Under the **Manage Applications** menu, use the following information:
 * Application: **EMPTY** (since there is no existing app, this should be empty)  
 * Application Name: **webapp** (no dashes)  
 
+**Payal added**
 The F5 ServiceCenter app uses application services declarative API in the backend to configure a BIG-IP application (Virtual server, pools, nodes etc). 
 
 A new application declaration creates in a new BIG-IP partition and multiple applications can be deployed within a parition.
@@ -402,7 +404,19 @@ with the following:
                 ]
 ```
 
-**NEED CONTENTS - NEED TO HAVE TEMPLATE TO CHANGE Default Persistence Profile**
+**Payal added**
+Now, let's change the default persistence profile to none, locate the following:
+
+```
+	"pool": "web_pool"
+```
+
+above the line add to look as below:
+
+```
+	"persistenceMethods": [],
+	"pool": "web_pool"
+```
 
 Once you have the VIP and Pool members modified, you can click **SUBMIT** to push the application configuration into the BIG-IP. 
 
