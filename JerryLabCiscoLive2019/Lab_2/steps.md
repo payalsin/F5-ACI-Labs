@@ -209,7 +209,7 @@ The Deployed Graph Instances state should say **_applied_**.
 
 ##Provisioning the BIG-IP using the F5 ACI ServiceCenter  
 
-The F5 ACI ServiceCenter is a F5 developed ACI app with tight integration... **NEED CONTENTS - NEED INPUT FROM F5**   
+The F5 ACI ServiceCenter is a F5 developed ACI app which runs natively in Cisco’s APIC, providing administrator a unified way to manage both L2-L3 and L4-L7 infrastructure.The app offers enhanced ACI-to-BIG-IP visibility; L2-L3 network stitching capability; and L4-L7 application services to ACI workloads
 
 You can access the F5 ACI ServiceCenter installed for this lab by Navigating to the **Apps** in the APIC menu bar.  
 
@@ -323,8 +323,12 @@ Under the **Manage Applications** menu, use the following information:
 * Application: **EMPTY** (since there is no existing app, this should be empty)  
 * Application Name: **webapp** (no dashes)  
 
-**NEED CONTENTS** 
-The F5 ServiceCenter app requires partition to be used when deploying VIPs, similar to how it works with the previous mechanism.  
+The F5 ServiceCenter app uses application services declarative API in the backend to configure a BIG-IP application (Virtual server, pools, nodes etc). 
+
+A new application declaration creates in a new BIG-IP partition and multiple applications can be deployed within a parition.
+
+Futhur reading and declaration details:
+https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/
 
 ![App](../img/f5-new-app.png)
 
