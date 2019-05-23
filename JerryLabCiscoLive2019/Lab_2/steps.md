@@ -222,6 +222,9 @@ If the **F5 ACI ServiceCenter** in the work pane does not exist, navigate to the
 
 Once the **F5 ACI ServiceCenter** is opened, you should see the following in the APIC UI  
 
+**Payal Added**
+You will see BIG-IP's managed by other students as well, make sureyou are working on your own BIG-IP
+
 ![Apps-2](../img/f5apps-2.png)  
 
 At this point, we are ready to connect the App with the BIP-IP, you can enter the following information:  
