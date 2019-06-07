@@ -1,0 +1,7 @@
+apic_ip: "10.107.0.xx"
+big_ip: "10.107.0.15x"
+tenant_name: "Student1"
+ldev_name: "Student1-LogicalDevice"
+ext_selfip: "10.168.12.50"
+int_selfip: "192.168.12.50"
+

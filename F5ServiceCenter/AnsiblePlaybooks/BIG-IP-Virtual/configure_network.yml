@@ -1,0 +1,96 @@
+---
+- name: L2-L3 stitching - F5 ServiceCenter
+  hosts: localhost
+  gather_facts: false
+  connection: local
+
+  vars_files:
+   creds.yml
+   
+  tasks:
+
+  - name: Login to APIC
+    uri:
+       url: https://{{apic_ip}}/api/aaaLogin.json
+       method: POST
+       validate_certs: no
+       body_format: json
+       body:
+        aaaUser:
+         attributes:
+          name: "admin"
+          pwd: "*********"
+       headers:
+         content_type: "application/json"
+       return_content: yes
+    register: cookie
+
+  - debug: msg="{{cookie['cookies']['APIC-cookie']}}"
+
+  - set_fact:
+     token: "{{cookie['cookies']['APIC-cookie']}}"
+
+  - name: Login to BIG-IP
+    uri:
+      url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/loginbigip.json
+      method: POST
+      validate_certs: no
+      body:
+       url: "{{big_ip}}"
+       user: "admin"
+       password: "*****"
+      body_format: json
+      headers:
+       DevCookie: "{{token}}"
+
+  - name: Get ldev information
+    uri:
+       url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/getldevinfo.json
+       method: POST
+       validate_certs: no
+       body:
+        url: "{{big_ip}}"
+        ldev: "uni/tn-{{tenant_name}}/lDevVip-{{ldev_name}}"
+       body_format: json
+       headers:
+        DevCookie: "{{token}}"
+       return_content: yes
+    register: ldev_info
+
+  - set_fact:
+     encap_info: "{{ encap_info|default([]) + [ {'lif': item.lif, 'encap': item.encap.split('-')[1], 'lIfCtxDn': item.lIfCtxDn, 'lifName': item.lifName }] }}"
+    loop: "{{ldev_info.json | json_query(query_string)}}"
+    vars:
+     query_string: "vlans[*]"
+
+  - debug: msg="{{encap_info}}"
+
+  - name: Create variable file
+    blockinfile:
+     path: ./variable.yml
+     create: yes
+     block: |
+      int_encap: {{encap_info[0].encap}}
+      int_lif: {{encap_info[0].lif}}
+      int_lIfCtxDn: {{encap_info[0].lIfCtxDn}}
+      int_lifName: {{encap_info[0].lifName}}
+      ext_encap: {{encap_info[1].encap}}
+      ext_lif: {{encap_info[1].lif}}
+      ext_lIfCtxDn: {{encap_info[1].lIfCtxDn}}
+      ext_lifName: {{encap_info[1].lifName}}
+
+  - name: Include variable file in play
+    include_vars: "variable.yml"
+
+  - name: Create template
+    template: src=network.j2 dest=network.json
+
+  - name: Configure L2-L3 configuration
+    uri:
+       url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/createbigipvlans.json
+       method: POST
+       validate_certs: no
+       body: "{{ lookup('file','network.json') }}"
+       body_format: json
+       headers:
+        DevCookie: "{{token}}"
