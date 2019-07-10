@@ -1,0 +1,86 @@
+---
+- name: Delete L2-L3 stitching - F5 ServiceCenter
+  hosts: localhost
+  gather_facts: false
+  connection: local
+
+  vars_files:
+   vars.yml
+
+  tasks:
+
+  - name: Login to APIC
+    uri:
+       url: https://{{apic_ip}}/api/aaaLogin.json
+       method: POST
+       validate_certs: no
+       body_format: json
+       body:
+        aaaUser:
+         attributes:
+          name: "{{apic_username}}"
+          pwd: "{{apic_password}}"
+       headers:
+         content_type: "application/json"
+       return_content: yes
+    register: cookie
+
+  - debug: msg="{{cookie['cookies']['APIC-cookie']}}"
+
+  - set_fact:
+     token: "{{cookie['cookies']['APIC-cookie']}}"
+
+  - name: Login to BIG-IP
+    uri:
+      url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/loginbigip.json
+      method: POST
+      validate_certs: no
+      body:
+       url: "{{big_ip}}"
+       user: "{{bigip_username}}"
+       password: "{{bigip_password}}"
+      body_format: json
+      headers:
+       DevCookie: "{{token}}"
+
+  - name: Get ldev information
+    uri:
+       url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/getldevinfo.json
+       method: POST
+       validate_certs: no
+       body:
+        url: "{{big_ip}}"
+        ldev: "uni/tn-{{tenant_name}}/lDevVip-{{ldev_name}}"
+       body_format: json
+       headers:
+        DevCookie: "{{token}}"
+       return_content: yes
+    register: ldev_info
+
+  - set_fact:
+     encap_info: "{{ encap_info|default([]) + [ {'lif': item.lif, 'lIfCtxDn': item.lIfCtxDn, 'name': item.appinfo.name }] }}"
+    loop: "{{ldev_info.json | json_query(query_string)}}"
+    when: item.appinfo is defined
+    vars:
+     query_string: "vlans[*]"
+
+  - block:
+    - name: "End play if nothing to delete"
+      debug:
+        msg: "No vlans configured, nothing to delete"
+
+    - meta: end_play
+    when: encap_info is not defined
+
+  - name: Create delete json template
+    template: src=delete_network.j2 dest=delete_network.json
+
+  - name: Delete L2-L3 configuration
+    uri:
+       url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/deletebigipvlans.json
+       method: POST
+       validate_certs: no
+       body: "{{ lookup('file','delete_network.json') }}"
+       body_format: json
+       headers:
+        DevCookie: "{{token}}"
