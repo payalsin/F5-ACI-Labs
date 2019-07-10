@@ -1,0 +1,12 @@
+## BIG-IP information ##
+bigip_username: "admin"
+bigip_password: "*****"
+big_ip: "10.107.0.151"
+
+## APIC information ##
+apic_username: "admin"
+apic_password: "*****"
+apic_ip: "10.107.0.24"
+
+tenant_name: "Student1"
+ldev_name: "Student1-LogicalDevice"
