@@ -1,0 +1,14 @@
+{
+  "url": "{{apic_ip}}",
+  "ldev": "uni/tn-{{tenant_name}}/lDevVip-{{ldev_name}}",
+  "devtype": "VIRTUAL",
+  "vlans": [
+    {% for item in encap_info %}
+    {
+      "lif": "{{item.lif}}",
+      "name": "{{item.name}}",
+      "lIfCtxDn": "{{item.lIfCtxDn}}"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
