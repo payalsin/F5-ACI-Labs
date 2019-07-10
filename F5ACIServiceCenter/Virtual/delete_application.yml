@@ -1,0 +1,68 @@
+---
+- name: Delete L4-L7 services - F5 ServiceCenter
+  hosts: localhost
+  gather_facts: false
+  connection: local
+
+  vars_files:
+   vars.yml
+
+  tasks:
+
+  - name: Login to APIC
+    uri:
+       url: https://{{apic_ip}}/api/aaaLogin.json
+       method: POST
+       validate_certs: no
+       body_format: json
+       body:
+        aaaUser:
+         attributes:
+          name: "{{apic_username}}"
+          pwd: "{{apic_password}}"
+       headers:
+         content_type: "application/json"
+       return_content: yes
+    register: cookie
+
+  - debug: msg="{{cookie['cookies']['APIC-cookie']}}"
+
+  - set_fact:
+     token: "{{cookie['cookies']['APIC-cookie']}}"
+
+  - name: Login to BIG-IP
+    uri:
+      url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/loginbigip.json
+      method: POST
+      validate_certs: no
+      body:
+       url: "{{big_ip}}"
+       user: "{{bigip_username}}"
+       password: "{{bigip_password}}"
+      body_format: json
+      headers:
+       DevCookie: "{{token}}"
+
+  - name: Delete L4-L7 configuration
+    uri:
+       url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/deleteas3partition.json
+       method: POST
+       validate_certs: no
+       status_code:
+        - 200
+        - 400
+       body:
+        url: "{{big_ip}}"
+        partition: "{{part_name}}"
+       body_format: json
+       headers:
+        DevCookie: "{{token}}"
+    register: data
+
+  - block:
+    - name: "End play if nothing to delete"
+      debug:
+        msg: "Partition not present to delete"
+
+    - meta: end_play
+    when: '"does not exist" in data.json.message'
