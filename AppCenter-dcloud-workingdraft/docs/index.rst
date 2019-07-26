@@ -30,7 +30,7 @@ L4-L7 App Services    Create custom application definitions, with the ability to
                          b) Create/update/delete application on BIG-IP                      
 ===================== ============================================================================================================================================================
 
-For more details on the interation refer to <<clouddocs>>
+For more details on the integration refer to <<clouddocs>>
 
 |
 

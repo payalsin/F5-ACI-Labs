@@ -61,13 +61,46 @@ After you submit you will see the configuration is consistent again and no warni
 
 The application has helped you see the configuration discrepency and provided you will an interface to fix that discrepency without logging directly into the BIG-IP
 
-You can at this point also login to the BIG-IP and view the VLAN change
+You can view the VLAN table under visibility and see both entires now. You can at this point also login to the BIG-IP and view the VLAN change
 
 Modify BIG-IP configuration out-of-band
 ```````````````````````````````````````
 
-- Change vlan ID BIG-IP
-- Go to visibility - only one why?
-- Let's sync App DB back to BIG-IP - all good
-- Do the process again, change vlan id on BIG-IP 
-  - Sync to BIG-IP to App DB , what happens and why?
+Let's take another example where a BIG-IP admin might go directly on the BIG-IP and change infomration.
+
+Let's take a look at how the application and help rectify the issue.
+
+First let's login to the BIG-IP and modify the VLAN tag. In this lab we are modifying 1003 to 1070.
+
+For your case take a VLAN of you choice on the VLAN and change it to a VLAN in the range 1000-1200
+
+On the BIG-IP navigate to Network->VLAN and click on the VLAN to be modified. Change the value scroll to the bottom and click update
+
+.. image:: ./_static/managel2l3-6.png
+
+..
+
+Now let's go back to the F5 ACI ServiceCenter , lets see the VLAN table, we only see one entry. This is because now the VLAN on the BIG-IP has changed and that VLAN does not exist on the APIC (so no co-relation)
+
+Now go to the L2-L3 Network management table
+
+Move the new VLANs from Available to Selected. 
+
+Scroll to the bottom, you will see a out-of-sync on the left hand side next to the VLAN changed. Click on the out-of-sync link
+
+.. image:: ./_static/managel2l3-7.png
+
+..
+
+You get the option to sync configuration is either direction, either we treat what we changed on the BIG-IP as the source of truth or we let what is on the application as the cource of truth. since its a VLAN ID we will treat whats on the application as source of truth
+
+
+.. image:: ./_static/managel2l3-8.png
+
+..
+
+Click on the button 'SYNC TO BIG-IP'
+
+At this point the application will change the VLAN tag back to the original and the out-of-sync issue has been taken care of
+
+You can view the VLAN table under visibility and see both entires now. You can at this point also login to the BIG-IP and view the VLAN change. 
