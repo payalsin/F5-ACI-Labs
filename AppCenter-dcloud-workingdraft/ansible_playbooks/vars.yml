@@ -1,0 +1,16 @@
+## BIG-IP information ##
+bigip_username: "admin"
+bigip_password: "admin"
+big_ip: "198.18.128.130"
+
+## APIC information ##
+apic_username: "admin"
+apic_password: "C1sco12345"
+apic_ip: "198.18.133.200"
+
+docker_ip: "198.18.134.150"
+
+tenant_name: "LAX"
+epg_name: "Provider-EPG"
+ldev_name: "BIGIP-VE-Standalone"
+part_name: "DemoPartition"
