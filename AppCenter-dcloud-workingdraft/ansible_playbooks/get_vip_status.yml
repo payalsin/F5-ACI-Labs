@@ -1,0 +1,76 @@
+---
+- name: Get Virtual IP health statistics - F5 ServiceCenter
+  hosts: localhost
+  gather_facts: false
+  connection: local
+
+  vars_files:
+   vars.yml
+
+  tasks:
+
+  - name: Login to APIC
+    uri:
+       url: https://{{apic_ip}}/api/aaaLogin.json
+       method: POST
+       validate_certs: no
+       body_format: json
+       body:
+        aaaUser:
+         attributes:
+          name: "{{apic_username}}"
+          pwd: "{{apic_password}}"
+       headers:
+         content_type: "application/json"
+       return_content: yes
+    register: cookie
+
+  - debug: msg="{{cookie['cookies']['APIC-cookie']}}"
+
+  - set_fact:
+     token: "{{cookie['cookies']['APIC-cookie']}}"
+
+  - name: Login to BIG-IP
+    uri:
+      url: http://{{docker_ip}}:5050/loginbigip.json
+      method: POST
+      validate_certs: no
+      body:
+       url: "{{big_ip}}"
+       user: "{{bigip_username}}"
+       password: "{{bigip_password}}"
+      body_format: json
+      #headers:
+      # DevCookie: "{{token}}"
+
+  - name: Get VIP information
+    uri:
+       url: http://{{docker_ip}}:5050/getvipstats.json
+       method: POST
+       validate_certs: no
+       body:
+        url: "{{big_ip}}"
+        partition: "{{part_name}}"
+       body_format: json
+       headers:
+        DevCookie: "{{token}}"
+       return_content: yes
+    register: stats
+
+  - debug: msg="No VIP's present to display in partiton => {{part_name}}"
+    when: stats.content == "[]"
+
+  - name: VIP, Pool and Node information
+    debug: msg="{{stats.content}}"
+    when: stats.content != "[]"
+
+  - name: VIP information only
+    debug: msg="{{stats.json[0].vip}}"
+    when: stats.content != "[]"
+
+  - name: Give me all Node IP address that belong to EPG Provider-EPG
+    debug: msg="{{item.address}}"
+    when: item.epg.name == epg_name and item.tenant.name == tenant_name
+    loop: "{{stats | json_query(query_string)}}"
+    vars:
+     query_string: "json[0].nodes[*]"
