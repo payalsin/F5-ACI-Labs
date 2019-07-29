@@ -393,7 +393,19 @@ For us the pool members/workload is present in the Provider-EPG so lets
 Now let's make the APIC learn the second endpoint. We are going to do this through automation
 
 - Open POSTMAN application that is present on the desktop
+  
+  .. image:: ./_static/postman0.png
+
+  ..
+  
+- Go to the 'Collections tab'
+
+  .. image:: ./_static/postman01.png
+
+  ..
+  
 - Go to Collection 'EndPoint Management'
+
 - Go to 'APIC login' and click on Send. This is creating a login token for the remaining API calls
 
   .. image:: ./_static/scenario1-ts-postman_login.png

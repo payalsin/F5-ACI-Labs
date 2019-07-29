@@ -48,6 +48,7 @@ For more details on the integration refer to <<clouddocs>>
    app_configuration.rst
    manage_l2l3.rst
    api_postman_app.rst
+   dynamic.rst
    ansible_app.rst
    one_arm.rst
-   dynamic.rst
+   
