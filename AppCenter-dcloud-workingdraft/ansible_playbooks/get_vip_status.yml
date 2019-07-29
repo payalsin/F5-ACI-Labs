@@ -70,7 +70,7 @@
 
   - name: Give me all Node IP address that belong to EPG Provider-EPG
     debug: msg="{{item.address}}"
-    when: item.epg.name == "Provider-EPG"
+    when: item.epg.name == epg_name and item.tenant.name == tenant_name
     loop: "{{stats | json_query(query_string)}}"
     vars:
      query_string: "json[0].nodes[*]"
