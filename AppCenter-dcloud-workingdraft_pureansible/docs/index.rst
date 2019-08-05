@@ -25,5 +25,5 @@ Ansible tower credentials:
    :hidden:
 
    ansible_tower_walkthrough.rst
-   configure_jobs.rst
+   dynamic_ep.rst
    

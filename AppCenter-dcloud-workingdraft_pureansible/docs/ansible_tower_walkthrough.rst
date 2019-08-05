@@ -278,7 +278,7 @@ First job template
 
 - Playbook - 'bigip_configure_network.yml'
 
-Rest all of the paramters same as before
+Rest all of the parameters same as before
 
 |
 
