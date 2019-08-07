@@ -3,7 +3,17 @@ Ansible Tower
 
 Red Hat® Ansible® Tower helps you scale IT automation, manage complex deployments and speed productivity. Centralize and control your IT infrastructure with a visual dashboard, role-based access control, job scheduling, integrated notifications and graphical inventory management. And Ansible Tower's REST API and CLI make it easy to embed Ansible Tower into existing tools and processes.
 
-If new to tower please watch the 10 minute overview before proceeding: https://www.ansible.com/products/tower
+As menitoned we will be using Ansible Tower to execute all of the playbooks/workflows.
+
+Below is a overview of the flow of the lab
+
+|
+
+.. image:: ./_static/lab_flow.png
+
+|
+
+Let's start by going over the Tower configurations
 
 Pre-configured
 --------------
@@ -28,11 +38,9 @@ Stucture of tower objects is as follows:
 
 |
 
-An Organization is a logical collection of Users, Teams, Projects, and Inventories, and is the highest level in the Tower object hierarchy.
-
 Lets start by taking a look at the organization 
 
-Scroll down to Access->Organization on the left hand pane, there are 2 organization present. We will be working with organization 'dCloud' which currently has 1 project defined.
+Scroll down to Access and click on Organization on the left hand pane, there are 2 organizations present. We will be working with organization 'dCloud' which currently has 1 project defined.
 
 |
 
@@ -40,7 +48,9 @@ Scroll down to Access->Organization on the left hand pane, there are 2 organizat
 
 | 
 
-Next lets look at the Project configured. A Project is a logical collection of Ansible playbooks, represented in Tower. You can manage playbooks and playbook directories by either placing them manually under the Project Base Path on your Tower server, or by placing your playbooks into a source code management (SCM) system supported by Tower. 
+Next lets look at the Project configured. 
+
+A Project is a logical collection of Ansible playbooks, represented in Tower. You can manage playbooks and playbook directories by either placing them manually under the Project Base Path on your Tower server, or by placing your playbooks into a source code management (SCM) system supported by Tower. 
 
 We are going to use Git as our SCM for this lab
 
@@ -67,9 +77,21 @@ Under that project you will notice
 
 |
 
-Next lets look at the inventory. Ansible playbooks can be run against multiple hosts, the inventory is used to define those hosts.
+Next lets look at the inventory. 
 
-Click on 'Inventories' on the left hand pane. Click on 'Demo Inventory'. Click on 'Groups'
+Ansible playbooks can be run against multiple hosts, the inventory is used to define those hosts.
+
+Click on 'Inventories' on the left hand pane. Click on 'Demo Inventory'
+
+Then click on 'Groups' button on the Top.
+
+|
+
+.. image:: ./_static/tower_inventory.png
+
+|
+
+There is one group 'aci', click on 'aci'. 
 
 |
 
@@ -77,7 +99,7 @@ Click on 'Inventories' on the left hand pane. Click on 'Demo Inventory'. Click o
 
 |
 
-There is one group 'aci', click on 'aci'. Then click on 'Hosts'.
+Then click on 'Hosts'.
 
 |
 
@@ -93,7 +115,7 @@ Here the aci host has been defined against which we want to run the playbook. We
 
 |
 
-Next lets look at the credentials. Here is where we will define the credentials to be used to login to the APIC
+Next lets look at the credentials. The credentials used to login to the APIC are already defined here.
 
 Click on 'Credentials' on the left hand pane. Click on 'apic1'
 
@@ -117,9 +139,7 @@ We are going to create two job templates, one to configure the APIC and the seco
 Job template - APIC configuration
 `````````````````````````````````
 
-This job template pushes all the configuration needed to setup a service graph on the APIC. We are setting up a 2 node ARM service graph.
-
-We are going to configure a 2 arm service graph to connect a F5 BIG-IP to a the Cisco APIC fabric
+This job template pushes all the configuration needed to setup a service graph on the APIC. We are going to configure a 2 arm service graph to connect a F5 BIG-IP to a the Cisco APIC fabric
 
 Information about service graph => Cisco®Application Centric Infrastructure (Cisco ACI™) technology enables you to insert Layer 4 through Layer 7 (L4-L7) functions using a concept called a service graph. This document describes the service graph concept and how to design for service insertion using the service graph.
 
@@ -170,6 +190,14 @@ A few more items that we are going to configure as part of the service graph
 
   - Present under Tenant -> L4-L7 Services -> Service Graph Templates
 
+Below is an overall view of the APIC contructs
+
+|
+
+.. image:: ./_static/apic_constructs_overview.png
+
+|
+
 **Let's configure the job template**
 
 Click on 'Templates' on the left hand pane, Click on the green '+' sign on the upper right corner. Select 'Job template'
@@ -202,15 +230,15 @@ After all the values are filled:
 
 Scroll to the bottom and save. 
 
-Structure of the playbook:
+Playbook details:
 
-- There are templates defined using Jinga2 templating. For information on jinga2 refer <<>>
+- There are templates defined using Jinga2 templating. For information on jinga2 refer to: https://jinja.palletsprojects.com/en/2.10.x/
 
-  - Lets take an example of one jinja2. <<Give link to one jinga2 file -ldev.j2>>
+  - Take a look at one example of the jinja2 we are going to be using - https://github.com/payalsin/f5_aci_dCloud_ansible/blob/master/ldev.j2
   
   - There is one jinja2 template for each object that is to be created in the APIC
   
-  - This is payload that is going to be posted to the APIC. Anything in {{ }} is a variable, this variable will be substitued to its value once we run the playbook
+  - This is payload that is going to be posted to the APIC. Anything in "**{{ }}**" is a variable, this variable will be substitued to its value once we run the playbook
 
 - An ansible module called 'aci_rest' is used to POST the payload to the APIC rest end point
   
@@ -286,7 +314,7 @@ Rest all of the parameters same as before
 
 |
 
-Take a look at the code - << >> before proceeding. There are comments in the playbook to help understand the flow
+Take a look at the code https://github.com/payalsin/f5_aci_dCloud_ansible/blob/master/bigip_configure_network.yml before proceeding. There are comments in the playbook to help understand the flow
 
 Second job template
 
@@ -302,7 +330,7 @@ Rest all of the paramters same as before
 
 |
 
-Take a look at the code - << >> before proceeding. There are comments in the playbook to help understand the flow
+Take a look at the code https://github.com/payalsin/f5_aci_dCloud_ansible/blob/master/bigip_configure_application.yml before proceeding. There are comments in the playbook to help understand the flow
 
 Creating workflow
 -----------------
@@ -341,7 +369,7 @@ Click on the green 'Start' button. From the right hand pane
 - Now after the Start button you will see another node 'Configure L4-L7 APIC' added
 - Hover over that node, another smaller green button will appear, click on the '+' sign
 - From the right hand pane choose the job template 'Configure BIG-IP Network' and click select
-- Hoover over the newly added node, click on the smaller green '+' sign
+- Hover over the newly added node, click on the smaller green '+' sign
 - From the right hand pane choose the job template 'Configure BIG-IP Application' and click select
 - Click Save on the button left hand corner of the screen
 - Workflow has been created
@@ -388,6 +416,8 @@ Copy the below variables and copy it in the extra variables text box and click s
    consumer_interface: '1.1'
    provider_interface: '1.2'
 
+   #External Self-IP from the consumer subnet
+   #Internal Self-IP from the provider subnet
    selfip_information:
    - name: 'External-SelfIP'
      address: '10.10.10.50'
@@ -399,6 +429,7 @@ Copy the below variables and copy it in the extra variables text box and click s
      vlan: 'provider'
   
    vip_name: "http_vs"
+   #Virtual IP address from the consumer subnet
    vip_ip: "10.10.10.100"
    pool_name: "https-pool"
 
@@ -409,13 +440,35 @@ Before executing let's login to the APIC and BIG-IP and make sure there is no co
 
 On the APIC go to Tenant SJC-> L4-L7 services, and look at all the menu options there should be nothing configured
 
+|
+
+.. image:: ./_static/no_config_apic.png
+
+|
+
 On the BIG-IP go under the following menu options and make sure there is no configuration
 
 - Network->Self-IP 
 
 - Network->VLAN
 
+|
+
+.. image:: ./_static/no_config_bigip1.png
+
+|
+
 - Local Traffic -> Virtual Server
+
+- Local Traffic -> Pool
+
+- Local Traffic -> Node
+
+|
+
+.. image:: ./_static/no_config_bigip2.png
+
+|
 
 Now that we have the following covered:
 
@@ -524,7 +577,7 @@ Click on LocalTraffic->Pools->https-pool, you will see no members have been adde
 
 |
 
-At the point you should be able to reach the virtual server IP address from the consumer EPG
+At the point in a real environment you should be able to reach the virtual server IP address from the consumer EPG
 
 We are still to add members to the Pool that will be load balanced when the consumer hits the virtual IP address
 
