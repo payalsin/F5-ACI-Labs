@@ -10,7 +10,7 @@ apic_ip: "198.18.133.200"
 
 docker_ip: "198.18.134.150"
 
-tenant_name: "LAX"
+tenant_name: "SJC"
 epg_name: "Provider-EPG"
 ldev_name: "BIGIP-VE-Standalone"
-part_name: "DemoPartition"
+part_name: "DemoPartitionSJC"
