@@ -27,9 +27,11 @@ Lab environment
   
   - Hover over the wkst1 icon to get login credentails of the windows remote desktop
 
+    |
+	
     .. image:: ./_static/dcloud_login3.png
 
-    ..
+    |
 	
   - From your local device RDP to the windows workstation
   

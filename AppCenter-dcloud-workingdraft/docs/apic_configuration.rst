@@ -70,6 +70,26 @@ The service graph offers these advantages:
 
 For more information view the `white paper on service graph <https://www.cisco.com/c/en/us/solutions/collateral/data-center-virtualization/application-centric-infrastructure/white-paper-c11-734298.html>`_ 
 
+Below is an overall view of the APIC contructs
+
+|
+
+.. image:: ./_static/apic_constructs_overview1.png
+
+|
+
+Also there are different F5 deployment options and the one we are covering in this section is a two-arm deployment model
+
+Some highlights of a two arm deployment method:
+
+- More than one interface of F5 Load balancer is used in this method of deployment.
+
+- For Physical Servers(workload) default gateway is F5 Load Balancer IP Address.
+
+- Asymmetric routing does not occurs in this method.
+
+- Client IP address is retained
+
 **Lets begin with the configuration of the L4-L7 constructs in APIC**
 
 Logical device cluster 
@@ -192,6 +212,7 @@ Enter
 - ADC: "Two-Arm"
 
 |  
+
 .. image:: ./_static/sgt2.png
 
 |

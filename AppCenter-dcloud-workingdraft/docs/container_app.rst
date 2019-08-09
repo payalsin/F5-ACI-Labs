@@ -20,15 +20,17 @@ In this section we are going to login to the linux host start the F5 ACI Service
 
 - Select machine 'f5-tools1' and click on the load button. Make sure you have selected the right machine.
 
+  |
+  
   .. image:: ./_static/login_putty.png
 
-..
+  |
 
 - Click on the open button. Login with credentials root/C1sco12345
 
 - Run the following commands
   
-  .. code-block:: json
+  .. code-block:: rst
      
 	 sudo docker run --net host -d <<name_of_file>>
 	 
@@ -44,26 +46,31 @@ In this section we are going to login to the linux host start the F5 ACI Service
   
   - Run command
 
-    .. code-block:: json
+    .. code-block:: rst
    
        npm start
 
   - Wait for the program to completely start
 
+    |
+	
     .. image:: ./_static/npm_start.png
 	
-..
+    |
 	
 - Access app using URL http://localhost:4200. You will see a login screen as below:
 
-  .. image:: ./_static/login_screen.png
+  |
   
-..
+  .. image:: ./_static/docker_screen_initial.png
+  
+  |
   
 The docker container for the F5 ACI AppCenter is sucessfully started and is already connected to the APIC simulator in the backend
 
 .. note::
 
    **Again this method is only for the lab environment, on a physical APIC the F5 ACI ServiceCenter can be uploaded as an application and will be accessed via the APIC UI**
-   
+
+Leave this screen as is for now we will come back to managing the BIG-IP using the F5 ACI ServiceCenter   
    
