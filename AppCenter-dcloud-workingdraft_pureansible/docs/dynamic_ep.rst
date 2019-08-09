@@ -390,7 +390,7 @@ Let's take a look at how to create a schedule in ansible tower
 
 Before we create a schedule lets look at the date and time currently on the ansible tower 
 
-Open putty which is present in the toolbar. **Load** the tools server and clicl **Open**
+Open putty which is present in the toolbar. **Load** the tools server and click **Open**
 
 |
 
@@ -466,4 +466,88 @@ A few things you can try while the scheduled job is running (You can change the 
 
 - Add a few nodes directly on the BIG-IP using the LocalTraffic-> Nodes menu and see the behaviour once the playbook is run
 
+Delete configuration
+--------------------
+
+Just like we created job templates and a workflow for configuring the APIC and BIG-IP. 
+
+Lets Create job templates and workflow to execute deleting configuration
+
+Create three job templates
+ 
+- Name: Delete BIG-IP application, Playbook: cleanup/bigip_delete_application
+
+  | 
+
+  .. image:: ./_static/delete_bigip_application_job.png
+
+  |  
+	
+- Name: Delete BIG-IP network, Playbook: cleanup/bigip_delete_network
+  
+  | 
+
+  .. image:: ./_static/delete_bigip_network_job.png
+
+  |  
+	
+- Name: Delete L4-L7 APIC , Playbook: cleanup/apic_delete_l4l7
+  
+  | 
+
+  .. image:: ./_static/delete_apic_job.png
+
+  |  
+	
+Create a workflow (The workflow will be reversed for deletion process)
+
+- Delete BIG-IP Application -> Delete BIG-IP Network -> Delete APIC configuration
+  
+  | 
+
+  .. image:: ./_static/delete_workflow.png
+
+  |  
+	
+- Provide the same extra variables as provided while in the configure workflow
+  
+.. code-block:: yaml
+
+   # Variables used in playbooks used by Job1, Job3 and Job3
+   tenant_name: SJC
+   logicalDeviceCluster_name: BIGIP-VE-Standalone
+
+   #Login credentials
+   bigip_ip: 198.18.128.130
+   bigip_username: "admin"
+   bigip_password: "admin"
+
+   consumer_interface: '1.1'
+   provider_interface: '1.2'
+
+   #External Self-IP from the consumer subnet
+   #Internal Self-IP from the provider subnet
+   selfip_information:
+   - name: 'External-SelfIP'
+     address: '10.10.10.50'
+     netmask: '255.255.255.0'
+     vlan: 'consumer'
+   - name: 'Internal-SelfIP'
+     address: '10.193.102.50'
+     netmask: '255.255.255.0'
+     vlan: 'provider'
+
+   vip_name: "http_vs"
+   #Virtual IP address from the consumer subnet
+   vip_ip: "10.10.10.100"
+   pool_name: "https-pool"
+
+Execute/launch the workflow
+
+Once the workflow is successful verify that configuration has been deleted from the BIG-IP and APIC
+
+.. note::
+   
+   Playbooks for delete workflow are placed here: https://github.com/payalsin/f5_aci_dCloud_ansible/tree/master/cleanup
+      
 **This brings us to the end of the Lab**

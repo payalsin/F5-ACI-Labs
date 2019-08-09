@@ -109,19 +109,37 @@ In this case all node IP's that belong to EPG 'Provider-EPG'
 
 Right now we have only workload that belong to the EPG of Tenant LAX
 
-Let's add workload that belongs to Tenant SJC as well.
+Let's add an application on the BIG-IP that contains workload that belongs to Tenant SJC as well.
 
 .. note::
    
-   Hint: Go to Application Services tab on the F5 ACI ServiceCenter and deploy a new parition and application using (Follow section XYZ for reference)
+   Go to Application Services tab on the F5 ACI ServiceCenter and deploy a new parition and application
    
-   - Workload IPs: 10.193.102.2 and 10.193.102.2 (the difference is the third octect from workload in Tenant LAX)
-
+   Example: 
+   
+   - Partition Name: "DemoParitionSJC"
+   
+   - Application Name: "DemoApplicationSJC"
+   
+   Change the stub code to relect the following
+   
    - Virtual IP: 10.10.20.100
+   
+   - Pool member IPs: 10.193.102.2 and 10.193.102.3 (the difference is the third octect from workload in Tenant LAX)
+
+   Also open POSTMAN go to Collection 'EndPoint Managment', go to request 'Add EndPoint SJC'
+   
+   - Change the payload to 
+   
+     - <fvRsPathAtt tDn="topology/pod-1/paths-102/pathep-[eth1/3]" encap="vlan-2003"/> 
+	
+     - Click send 
+   
+   - This will add another learned endpoint to the Tenant SJC on the APIC
    
 Once you have deployed the configuration, go to the Visibility tab and choose the partition you created, select the VIP table you will see your VIP with the workload belong to SJC Tenant/App/EPG
 
-Now change the vars.yml to point to the new Tenant and EPG (EPG name is the same in both tenants)
+Now change the **vars.yml** to point to the new Tenant and EPG (EPG name is the same in both tenants)
 
 .. code-block:: rst
 
@@ -129,7 +147,11 @@ Now change the vars.yml to point to the new Tenant and EPG (EPG name is the same
    epg_name: "Provider-EPG"
    part_name: <<name of partition created by you>>
     
-Run your playbook again: ansible-playbook get_vip_status.yml. Output will be similiar to
+Run your playbook again: 
+
+**ansible-playbook get_vip_status.yml** 
+
+Output will be similiar to
 
 .. code-block:: RST
 
@@ -143,12 +165,57 @@ Run your playbook again: ansible-playbook get_vip_status.yml. Output will be sim
     "msg": "10.193.102.3"
    }
 
+This brings us to an end of the lab exercises. To summarize what we went through
+
+- Walkthrough the use cases
+
+  - Visbility
+  
+  - L2-L3 stitching
+  
+  - L4-L7 application
+  
+- Learnt how APIs can be used to interract with the application
+
+- Learnt how ansible can be used to execute the API's and remove relevant information
+
+We will now delete the configuration on the BIG-IP using the F5 ACI ServiceCenter using Ansible playbooks
+
 Delete configuration playbooks
 ------------------------------
 
 L4-L7 configuration
 ```````````````````
 
+Let's start be deleting the L4-L7 configuration. We will execute the playbook 'delete_application.yml'
+
+View the code before executing the playbook
+  
+Command: **ansible-playbook delete.application.yml**
+
+Go back to the F5 ACI ServiceCenter and click on the L4-L7 App services tab.
+
+Try to select a parition, if partition deleted sucessfully and this point you will see only 1 more partition
+
+Change the vars.yml file to reflect the parition you see and run the ansible playbook again
+
+Go back to the F5 ACI ServiceCenter and click on the L4-L7 App services tab.
+
+Try to select a parition, at the point there should be no paritions and the L4-L7 configuration has been successfully deleted
+
+
 L2-L3 configuration
 ```````````````````
-  
+Let's delete the L2-L3 configuration. We will execute the playbook 'delete_network.yml'
+
+View the code before executing the playbook
+	
+Command: **ansible-playbook delete.network.yml**
+
+Go back to the F5 ACI ServiceCenter and click on the L2-L3 stitching tab.
+
+Select the LDEV and then select the VLANS, there will be no configuration.
+
+Also login to the BIG-IP and verify no vlans/self-IP's exist and no parition expect common exists
+
+**This brings us to the end of the Lab**

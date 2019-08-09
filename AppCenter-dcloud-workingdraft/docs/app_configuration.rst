@@ -31,22 +31,20 @@ Add a new BIG-IP device (Device Login)
 
 2. Enter the BIG-IP device credentials.
    - 198.18.128.130 (admin/admin)
-
+   
+   |
+   
    .. image:: ./_static/login_screen.png
 
-   ..
+   |
    
-3. The newly-added device is displayed under the left menu bar.
+3. Log in to the BIG-IP device. The device hostname, redundancy state, and config sync state are displayed at the top of the page, along with three tabs: Visibility, L2-L3 Stitching, and L4-L7 App Services.
 
-   - If the device is standalone, it is visible under :guilabel:`Standalone BIG-IP Devices`. **(Option we will be using in this lab)**
-
-   - If the device is part of a highly-available (HA) pair, the F5 ACI ServiceCenter prompts for a cluster name. After you enter a cluster name, the device and its peer are added under the cluster name on the left menu bar. The peer device is in a logged-out state and you must log in to it separately.
-
-4. Log in to the BIG-IP device. The device hostname, redundancy state, and config sync state are displayed at the top of the page, along with three tabs: Visibility, L2-L3 Stitching, and L4-L7 Configuration.
-
+   |
+   
    .. image:: ./_static/login_screen1.png
 
-   ..
+   |
 
 Configure the network on BIG-IP
 -------------------------------
@@ -62,48 +60,68 @@ In this exercise we are going to use the logical device cluster we created earli
 Create VLAN and Self IP
 ```````````````````````
 
-1. Click the L2-L3 Network Management tab.
+1. Click the L2-L3 Stitching tab.
 
 2. From the :guilabel:`Logical Device` list, select the logical device created earlier in the lab 'LAX | BIGIP-VE-Standalone'
-
+  
+   |
+   
    .. image:: ./_static/l2l3-1.png
 
-   ..
+   |
    
-   The APIC information (click on the '+' sign) is which is READ ONLY displayed: Tenant, Concrete Devices and Interfaces, and Device Type (Physical/Virtual). You can also view a list of VLANs configured under the APIC Logical Device in the :guilabel:`Available` box.
+   The APIC information (click on the '+' sign) is which is READ ONLY displayed: Tenant, Concrete Devices and Interfaces, and Device Type (Physical/Virtual). 
+   
+   You can also view a list of VLANs configured under the APIC Logical Device in the :guilabel:`Available` box.
   
+   |
+   
    .. image:: ./_static/l2l3-2.png
 
-   ..
+   |
    
 3. Select the vlans and move them to the :guilabel:`Selected` box.
 
-   The details of all VLANs in the selected box are displayed below. The details consist of the APIC logical interface name.
-
+   The details of all VLANs in the selected box are displayed below. 
    
-4. After selecting the VLANS click :guilabel:`Manage Selected`. Also keepit mind which is internal and external interface as shown below
+   Keep in mind which is internal and external interface as shown below
 
+   After selecting the VLANS click :guilabel:`Manage Selected`. 
+   
+
+   |
+   
    .. image:: ./_static/l2l3-3.png
 
-   ..
+   |
 
    .. note::
    
       - A VLAN configuration form is displayed to add VLANs and information for one or more self IPs. 
-      - For VLAN, the fields to be configured are: 
-        - (1) Tag 
-        - (2) Interface. 
-      - For self IPs, the fields to be configured are 
+      
+	  - For VLAN, the fields to be configured are: 
+        
+		- (1) Tag 
+        
+		- (2) Interface. 
+      
+	  - For self IPs, the fields to be configured are 
+      
         - (1) Address 
+
         - (2) Netmask 
+
         - (3) Traffic-group
+       
         - (4) Port-lockdown
-      - Whether the interface is tagged or untagged depends on its device type. For a Physical device, VLANs are tagged and for virtual devices, VLANs are untagged. This option isn’t configurable or supported.
-      - The only options available for port lockdown are All, None, and Default.
+      
+	  - Whether the interface is tagged or untagged depends on its device type. For a Physical device, VLANs are tagged and for virtual devices, VLANs are untagged. This option isn’t configurable or supported.
+      
+	  - The only options available for port lockdown are All, None, and Default.
 
-5. The VLAN will also mention if its internal or external interface which is relevant for what interface you would assign on the BIG-IP
+4. The VLAN will also mention if its internal or external interface which is relevant for what interface you would assign on the BIG-IP
 
-   Enter the following value (** your VLAN values might differ from 1002 (internal) and 1001 (external))
+   Enter the following values - **your VLAN values might differ from 1002 and 1001**
   
    - For VLAN tag 1002 (representing **internal** interface on BIG-IP)
 
@@ -118,10 +136,12 @@ Create VLAN and Self IP
        - Traffic Group - traffic-local-group-only
 	  
        - Port lockdown - Allow Default
-	   
+	  
+     |
+	 
      .. image:: ./_static/l2l3-4.png
 
-     ..
+     |
    
    - For VLAN tag 1001 (representing **external** interface on BIG-IP)
 
@@ -136,18 +156,24 @@ Create VLAN and Self IP
        - Traffic Group - traffic-local-group-only
 	  
        - Port lockdown - Allow Default
-	   
-     .. image:: ./_static/l2l3-5.png
+         |	   
+     
+         .. image:: ./_static/l2l3-5.png
 
-     ..
+         |
 	 
-5. Click :guilabel:`Submit`
+Click :guilabel:`Submit`
 
-The BIG-IP device has the same VLANs configured as the APIC LDEV VLAN and L2-L3 stitching is complete. The F5 ACI ServiceCenter is a stateful application, all the network information is now stored in the application, deletion and modification to the configuration can be done via the App itself
+The BIG-IP device has the same VLANs configured as the APIC LDEV VLAN and L2-L3 stitching is complete.
+
+The F5 ACI ServiceCenter is a stateful application, all the network information is now stored in the application. 
+Deletion and modification to the configuration can be done via the App itself
+
+|
 
 .. image:: ./_static/l2l3-6.png
 
-..
+|
 
 .. note ::
 
@@ -162,20 +188,24 @@ Login to the BIG-IP (198.18.128.130 admin/admin) - you can also use the shortcut
 
 Navigate to Network->VLANS
 
+|
+
 .. image:: ./_static/l2l3-7.png
 
-..
+|
 
 Navigate to Network->Self IPs
 
+|
+
 .. image:: ./_static/l2l3-8.png
 
-..
+|
    
 Navigate the Visibility tab
 ---------------------------
 
-Lets go back to applciation. Click on the visibility tab which is open by default. The contents of all tables are populated by pulling information from the BIG-IP and then co-relating it to configuration on the APIC
+Lets go back to F5 ACI SErviceCenter applciation. Click on the visibility tab which is open by default. The contents of all tables are populated by pulling information from the BIG-IP and then co-relating it to configuration on the APIC
 
 In the F5 ACI ServiceCenter :guilabel:`Partition` list, :guilabel:`Common Partition` is selected by default. If any other partition is selected, for example the :guilabel:`Sample Partition`, the selected table shows entries that belong to both the sample partition and common partition.
 
@@ -190,9 +220,11 @@ This table will pull vlan information from the BIG-IP and co-relate it to a logi
 
 2. The table shows all the VLANs (vlan encaps) from the BIG-IP device that have a corresponding Logical Device|Tenant entry on the APIC.
 
+   |
+   
    .. image:: ./_static/vlan_table.png
 
-   ..
+   |
    
    .. note ::
    
@@ -204,19 +236,20 @@ View VIP table
 
 **Currently this table is empty since we have not configured any VIPs/Pool/Pool members on the BIG-IP**
 
-This table will pull virtual servers/pools and pool members from the BIG-IP and co-relate is to a Tenant/Applicatio Profile and Endpoint group on the APIC
+This table will pull virtual servers/pools and pool members from the BIG-IP and co-relate is to a Tenant/Application Profile and Endpoint group on the APIC
 
-1. Click the Visibility tab, and then from the :guilabel:`Table` list, click the :guilabel:`VIP` table.
+Click the Visibility tab, and then from the :guilabel:`Table` list, click the :guilabel:`VIP` table.
 
-2. This table shows all the VIPs (virtual servers) from the BIG-IP device. It also shows the pool and nodes for this VIP. For each node, it displays the corresponding Tenant, Application, and End Point
+
+.. note::
+   
+   This table will show all the VIPs (virtual servers) from the BIG-IP device. It also shows the pool and nodes for this VIP. For each node, it displays the corresponding Tenant, Application, and End Point
    Group entries from APIC.
    
-   .. note::
-   
-      Virtual IP's will be present ONLY if below conditions are met
-	  - Virtual IP has a Pool assigned to it
-	  - Pool assigned has pool members assigned to it
-	  - Pool member IP's matches end point IP's learned by APIC (we will go into this into detial on this in coming sections
+   Virtual IP's will be present ONLY if below conditions are met
+   - Virtual IP has a Pool assigned to it
+   - Pool assigned has pool members assigned to it
+   - Pool member IP's matches end point IP's learned by APIC (we will go into this into detial on this in coming sections
    
 View Node table
 ```````````````
@@ -227,13 +260,13 @@ This table shows all the Nodes from this BIG-IP device, provided they have a cor
 
 It also displays the pools that the node belongs to. For each pool, it shows the corresponding VIPs (virtual servers).
 
-1. Click the Visibility tab, and then click the :guilabel:`Node` table from the Table list.
+Click the Visibility tab, and then click the :guilabel:`Node` table from the Table list.
 
-   .. note::
+.. note::
    
-      Node IP's will be present ONLY if below conditions are met
+   Node IP's will be present ONLY if below conditions are met
 	 
-      - Node member IP's matches end point IP's learned by APIC (we will go into this into detial on this in coming sections). What this also means is that a specific node is not operational on the APIC and hence not displayed in the Node table
+   - Node member IP's matches end point IP's learned by APIC (we will go into this into detial on this in coming sections). What this also means is that a specific node is not operational on the APIC and hence not displayed in the Node table
 
 Configure the application on BIG-IP
 -----------------------------------
@@ -255,14 +288,20 @@ Now when you click the L4-L7 App Service tab, two subtabs are displayed (BIG-IP 
 Create a partition and application 
 ``````````````````````````````````
 
-Click on the Application tab and move to the advanced view as shown
+Click on the Application tab
 
-<<screen shot needed>>
 
 1. Two new fields, :guilabel:`Partition Name` and :guilabel:`Application Name`, are
    displayed. 
+    
+   From the dropdown list select "Create New Partition", the partition and application fields will be activated and values need to be entered
+  
+   |
    
-   From the dropdown list select "Create New Partition", the partition and application fields will be eanbled
+   .. image:: ./_static/l4l7-1.png
+
+   |
+   
    Enter valid input for both. The new partition can’t be created without providing an application name.
    
    Enter the following:
@@ -271,8 +310,12 @@ Click on the Application tab and move to the advanced view as shown
    
    - Application Name: 'DemoApplication'
 
-   <<screen shot needed>>
+   |
+   
+   .. image:: ./_static/l4l7-2.png
 
+   |
+   
 2. Stub(sample) code is displayed in the textbox, edit the values as below:
    
    - <<YOUR_VIP_HERE>> to 10.10.10.100
@@ -280,7 +323,9 @@ Click on the Application tab and move to the advanced view as shown
    - <<YOUR_POOL_MEMBER_HERE>> to 10.193.101.2
 
    - <<YOUR_POOL_MEMBER_HERE>> to 10.193.101.3
-					
+
+   Example below:
+   
    .. code-block:: json
    
       {
@@ -314,19 +359,6 @@ Click on the Application tab and move to the advanced view as shown
 
 A new partition and application is created on the BIG-IP device.
 
-View the current AS3 configuration from the app
-```````````````````````````````````````````````
-
-Once the configuration is submitted you can view the payload by following the below steps, this will give you the complete configuration information on the BIG-IP and not just a specific partition/application
-
-1. In the top right of the L4-L7 Configuration tab, click the :guilabel:`Details` icon.
-
-   << screen shot needed>>
-   
-2. A window with the current AS3 declaration is displayed.
-
-The window also has a :guilabel:`Delete` button, so you can delete the entire AS3 declaration from the BIG-IP device.
-
 View the current AS3 configuration on the BIG-IP
 ````````````````````````````````````````````````
 
@@ -336,29 +368,37 @@ Let's also view the configuration that got pushed to the BIG-IP
 
 2. Go to the top right hand corner and select 'DemoParition' from the partition drop down list
 
+   |
+   
    .. image:: ./_static/bigip_after_as3-1.png
 
-   ..
+   |
    
 3. Navigate to Local Traffic -> Virtual Servers
 
 4. Click on serviceMain, scroll down and view all the configurations for the virtual server. Some were passed as parameters to the payload others were treated as default
 
+   |
+ 
    .. image:: ./_static/bigip_after_as3-2.png
 
-   ..
+   |
    
 5. Click on resources and see the default pool 'web_pool' assigned to it
 
+   |
+   
    .. image:: ./_static/bigip_after_as3-3.png
 
-   ..
+   |
    
 6. Navigate to Local Traffic- > Pools -> Pool List. Click on 'web_pool'. Click on the Members tab and view the pool memebers configured
 
+   |
+   
    .. image:: ./_static/bigip_after_as3-4.png
 
-   ..
+   |
    
 Troubleshoot using visibility
 -----------------------------
@@ -372,9 +412,11 @@ Let's go back to the visibility tab and select table: 'Node Information' and Par
 
 You can collapse the left hand pane to get an expanded view of the visibility table
 
+|
+
 .. image:: ./_static/scenario1-ts-1.png
 
-..
+|
    
 Let's look at why that is. As stated earlier ONLY those nodes will show up that have been learned by the APIC fabric.
 
@@ -386,43 +428,55 @@ For us the pool members/workload is present in the Provider-EPG so lets
 
 - We see only one member that is learned here which matches 10.193.101.2 that we see from the visibility section of the F5 ACI ServiceCenter
 
+|
+
 .. image:: ./_static/scenario1-ts-2.png
 
-..
+|
 
 Now let's make the APIC learn the second endpoint. We are going to do this through automation
 
-- Open POSTMAN application that is present on the desktop
+Open POSTMAN application that is present on the desktop
+
+|  
+
+.. image:: ./_static/postman0.png
+
+|
   
-  .. image:: ./_static/postman0.png
+Go to the 'Collections tab'
 
-  ..
+|
   
-- Go to the 'Collections tab'
+.. image:: ./_static/postman01.png
 
-  .. image:: ./_static/postman01.png
-
-  ..
+|
   
-- Go to Collection 'EndPoint Management'
+Go to Collection 'EndPoint Management'
 
-- Go to 'APIC login' and click on Send. This is creating a login token for the remaining API calls
+Go to 'APIC login' and click on Send. This is creating a login token for the remaining API calls
 
-  .. image:: ./_static/scenario1-ts-postman_login.png
-
-  ..
-
-- Go to 'Add EndPoint' and click Send
-
-  .. image:: ./_static/scenario1-ts-postman_addep.png
-
-  ..
+|
   
-Now go back to APIC and refresh the end points under the Operational tab. there should be two endpoint now 10.193.101.2 and 10.193.101.3
+.. image:: ./_static/scenario1-ts-postman_login.png
+
+|
+
+Go to 'Add EndPoint LAX' and click Send
+
+|
+  
+.. image:: ./_static/scenario1-ts-postman_addep.png
+
+|
+  
+Now go back to APIC and refresh the end points under the Operational tab. There should be two endpoint now 10.193.101.2 and 10.193.101.3
+
+|
 
 .. image:: ./_static/scenario1-ts-3.png
 
-..
+|
 
 Let's go back to the F5 ACI ServiceCenter and see what the visibility node tables shows now
 

@@ -41,7 +41,7 @@ on the RDP client
 =========== ================ ========================== =======================================
 Name        IP               Credentials                Remarks                                      
 =========== ================ ========================== =======================================
-RDP client  192.18.133.36    username: dcloud\demouser
+RDP client  192.18.133.36    username: dcloud\\demouser
                              password: C1sco12345
 							
 BIG-IP	    192.18.128.130   admin/admin     	        Bookmark in RDP browser

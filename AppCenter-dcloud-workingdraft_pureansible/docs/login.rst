@@ -44,16 +44,15 @@ Lab environment
 For guidance: IP and credentials are mentioned below but each of the components below has a shortcut located 
 on the RDP client
 
-============= ================ ========================== =========================================
-Name          IP               Credentials                Remarks                                      
-============= ================ ========================== =========================================
-
-RDP client    192.18.133.36    username: dcloud\demouser
+============= ================ =========================== =========================================
+Name          IP               Credentials                 Remarks                                      
+============= ================ =========================== =========================================
+RDP client    192.18.133.36    username: dcloud\\demouser
                                password: C1sco12345
-							
-BIG-IP	      192.18.128.130   admin/admin     	          Bookmark in RDP browser
+							   
+BIG-IP	      192.18.128.130   admin/admin     	           Bookmark in RDP browser
 
-APIC          192.18.133.200   admin/C1sco12345	          Bookmark in RDP browser
+APIC          192.18.133.200   admin/C1sco12345	           Bookmark in RDP browser
 
-Ansible Tower 192.18.134.150   admin/C1sco12345		      Bookmark in RDP Browser 'Ansible AWX'                
-============= ================ ========================== =========================================
+Ansible Tower 192.18.134.150   admin/C1sco12345		       Bookmark in RDP Browser 'Ansible AWX'                
+============= ================ =========================== =========================================

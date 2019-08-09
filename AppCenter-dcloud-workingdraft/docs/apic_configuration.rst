@@ -20,13 +20,15 @@ L2-L3 Pre-configured
 
 - VMM integration has been done and the VMM domain has been assigned to the EPG's
 
+  |
+  
   .. image:: ./_static/apic_config_tenant1.png
 
-  ..
+  |
   
   .. image:: ./_static/apic_config_tenant2.png
   
-  ..
+  |
 
 L4-L7 to be configured
 ----------------------
@@ -79,14 +81,13 @@ Lets create a BIG-IP Unmanaged L4-L7 device under tenant indicating the BIG-IP V
 
 Navigate to Tenant LAX -> L4-L7 Services -> L4-L7 Devices, right click and go to ‘Create L4-L7’ devices
 
-..
+|
  
 .. image:: ./_static/ldc0.png
 
-..
+|
   
-..
-  
+
 Configure as follow:
 
 - Uncheck the box "Managed"
@@ -105,21 +106,21 @@ Configure as follow:
   
   - Click on the '+' sign at the top right side under the devices section
       
-    ..
+    |
 	  
     .. image:: ./_static/ldc1.png
 
-    ..
+    |
 	  
   - Enter Device name: "Device1"
 
   - Select VM from drop down list: "dCloud-DC/BIGIP1-VM"
 	
-    ..
+    |
   
     .. image:: ./_static/ldc2.png
 
-    ..
+    |
 	
   - Click next. Click on the '+' sign on the top right hand of the interfaces section
 	
@@ -131,11 +132,11 @@ Configure as follow:
 	  
     - Click "OK"
 	    
-      ..
+      |
 	
       .. image:: ./_static/ldc3.png
 
-      ..
+      |
 
       .. note::
       
@@ -155,15 +156,14 @@ Configure as follow:
 	  
     - Click "Finish"
 
-      ..
+      |
 		
       .. image:: ./_static/ldc4.png
 
-      ..
+      |
 	
 Service graph template
 ``````````````````````
-
 A service graph template is represented as two or more tiers of an application with the appropriate service function
 inserted between the tiers
 
@@ -171,25 +171,30 @@ Lets create a 2 ARM service graph template with the F5 BIG-IP service in the mid
 
 Navigate to Tenant LAX -> L4-L7 Services -> Service Graph Templates, right click and go to ‘Create L4-L7 Service Graph Templates’
 
+|
+
 .. image:: ./_static/sgt0.png
 
-..
+|
 
 Drag and drop the logical device cluster from the left hand pane into the right hand pane
-  
+ 
+| 
+
 .. image:: ./_static/sgt1.png
 
-..
+|
   
 Enter 
 
 - Service Graph Name: "2ARM-Template"
 
 - ADC: "Two-Arm"
-  
+
+|  
 .. image:: ./_static/sgt2.png
 
-..
+|
   
 Click submit
  
@@ -206,21 +211,27 @@ Now that the service graph template is created we will apply/deploy this service
 
 Right click on the service graph template '2ARM-Template' and click on 'Apply L4-L7 Service Graph Template'
 
+|
+
 .. image:: ./_static/apply_sgt1.png
 
-..
+|
    
 Select the consumer and provider EPG from the dropdown list as shown below and click next
 
+|
+
 .. image:: ./_static/apply_sgt2.png
 
-.. 
+| 
 
 Map cluster interface with the BD. Select the appropriate cluster interface as shown below
 
+|
+
 .. image:: ./_static/apply_sgt3.png
 
-.. 
+| 
 
 Click FINISH
 
@@ -237,17 +248,21 @@ Lets look at the configuration that got deployed once the service graph template
 
 Navigate to L4-L7-> Deployed Graph Instances, on the right hand pane you will see the deployed graph which is in **applied** state. If there is an error in deploying this state would not be applied but something like **failed-to-apply**
 
+|
+
 .. image:: ./_static/verify_graph1.png
 
-.. 
+| 
 
 Expand Deployed Graph Instances, expand BIGIP-VE-Standalone-Contract-2ARM-Template-LAX and click on Function Node. On the right hand pane under properties there is a small scroll bar on the right , scroll down till you see 'Function Connectors' and note the encap for consumer and provider assigned
 
 The VLANS you see might be different from the screen shot below
 
+|
+
 .. image:: ./_static/verify_graph2.png
 
-.. 
+| 
 
 .. note ::
 
@@ -258,10 +273,12 @@ The VLANS you see might be different from the screen shot below
    This VLAN got assigned dynamically by APIC based on the VMM integration assigned at the time we configured the logical device cluster
    
    You can view the dynamic VLAN range allocated to the VMM domain by navigating to the Fabric tab on APIC.Then click on the Access policies tab->Pools->VLAN->dCloud_VLAN_Pool (this range will match what got allocated above)
+ 
+   |
    
    .. image:: ./_static/dynamic_vlan.png
 
-   .. 
+   | 
    
    
  

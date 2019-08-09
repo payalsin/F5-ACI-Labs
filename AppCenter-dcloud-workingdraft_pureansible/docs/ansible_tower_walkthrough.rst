@@ -404,7 +404,7 @@ Copy the below variables and copy it in the extra variables text box and click s
 
 .. code-block:: yaml
 
-   # Variables used in playbooks used by Job1, Job3 and Job3
+   #Variables used in playbooks used by Job1, Job3 and Job3
    tenant_name: SJC
    logicalDeviceCluster_name: BIGIP-VE-Standalone
 
