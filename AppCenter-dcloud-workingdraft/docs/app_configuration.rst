@@ -99,25 +99,25 @@ Create VLAN and Self IP
    
       - A VLAN configuration form is displayed to add VLANs and information for one or more self IPs. 
       
-	  - For VLAN, the fields to be configured are: 
+      - For VLAN, the fields to be configured are: 
         
-		- (1) Tag 
+        - Tag 
         
-		- (2) Interface. 
+        - Interface
       
-	  - For self IPs, the fields to be configured are 
+      - For self IPs, the fields to be configured are 
       
-        - (1) Address 
+        - Address 
 
-        - (2) Netmask 
+        - Netmask 
 
-        - (3) Traffic-group
+        - Traffic-group
        
-        - (4) Port-lockdown
+        - Port-lockdown
       
-	  - Whether the interface is tagged or untagged depends on its device type. For a Physical device, VLANs are tagged and for virtual devices, VLANs are untagged. This option isn’t configurable or supported.
+      - Whether the interface is tagged or untagged depends on its device type. For a Physical device, VLANs are tagged and for virtual devices, VLANs are untagged. This option isn’t configurable (In this lab since we are using a virtual edition the interface will be untagged)
       
-	  - The only options available for port lockdown are All, None, and Default.
+      - The only options available for port lockdown are All, None, and Default.
 
 4. The VLAN will also mention if its internal or external interface which is relevant for what interface you would assign on the BIG-IP
 
@@ -205,7 +205,7 @@ Navigate to Network->Self IPs
 Navigate the Visibility tab
 ---------------------------
 
-Lets go back to F5 ACI SErviceCenter applciation. Click on the visibility tab which is open by default. The contents of all tables are populated by pulling information from the BIG-IP and then co-relating it to configuration on the APIC
+Lets go back to F5 ACI ServiceCenter applciation. Click on the visibility tab which is open by default. The contents of all tables are populated by pulling information from the BIG-IP and then co-relating it to configuration on the APIC
 
 In the F5 ACI ServiceCenter :guilabel:`Partition` list, :guilabel:`Common Partition` is selected by default. If any other partition is selected, for example the :guilabel:`Sample Partition`, the selected table shows entries that belong to both the sample partition and common partition.
 
@@ -243,13 +243,18 @@ Click the Visibility tab, and then from the :guilabel:`Table` list, click the :g
 
 .. note::
    
-   This table will show all the VIPs (virtual servers) from the BIG-IP device. It also shows the pool and nodes for this VIP. For each node, it displays the corresponding Tenant, Application, and End Point
+   This table will show all the VIPs (virtual servers) from the BIG-IP device. 
+   
+   It also shows the pool and nodes for this VIP. For each node, it displays the corresponding Tenant, Application, and End Point
    Group entries from APIC.
    
    Virtual IP's will be present ONLY if below conditions are met
+   
    - Virtual IP has a Pool assigned to it
+   
    - Pool assigned has pool members assigned to it
-   - Pool member IP's matches end point IP's learned by APIC (we will go into this into detial on this in coming sections
+   
+   - Pool member IP's matches end point IP's learned by APIC (we will go into this into detail on this in coming sections
    
 View Node table
 ```````````````
@@ -271,7 +276,9 @@ Click the Visibility tab, and then click the :guilabel:`Node` table from the Tab
 Configure the application on BIG-IP
 -----------------------------------
 
-An application is configured using AS3. For information on how to define a declaration, see https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/userguide/.
+Now lets configure some VIPs/Pool and nodes on the BIG-IP and see how they are reflected in the visibility tables.
+
+An application on BIG-IP is configured using AS3. For information on how to define a declaration, see https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/userguide/.
 
 In simple terms its a two step process:
 
@@ -392,7 +399,7 @@ Let's also view the configuration that got pushed to the BIG-IP
 
    |
    
-6. Navigate to Local Traffic- > Pools -> Pool List. Click on 'web_pool'. Click on the Members tab and view the pool memebers configured
+6. Navigate to Local Traffic- > Pools -> Pool List. Click on 'web_pool'. Click on the Members tab and view the pool members configured
 
    |
    
@@ -482,14 +489,18 @@ Let's go back to the F5 ACI ServiceCenter and see what the visibility node table
 
 It now gives us information about both the nodes and to what tenant/app/epg to they belong to on the APIC
 
+|
+
 .. image:: ./_static/scenario1-ts-4.png
 
-..
+|
 
 Let's take a look at the 'VIP table', the VIP table gives information from the BIG-IP about which pool the VIP belongs to and the pool memebers belonging to the pool. 
 
-It's essentially similiar infomration as the node table but in a different format so that its easier for a user to consume the information regarding the BIG-IP configuration
+It's essentially similiar information as the node table but in a different format so that its easier for a user to consume the information regarding the BIG-IP configuration
+
+|
 
 .. image:: ./_static/scenario1-ts-5.png
 
-..
+|

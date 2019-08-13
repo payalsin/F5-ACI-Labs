@@ -3,7 +3,7 @@ Manage L2-L3 configuration
 
 Now that we have performed some Day0 configuration for the network and also the application. 
 
-Lets look at how we can managing DayN configuration using the application.
+Lets look at how we can managing DayN configuration using the F5ACI ServiceCenter.
 
 Re-deploy service graph
 ```````````````````````
@@ -35,9 +35,9 @@ Check the deployed graph instance and also the VLANs allocated under the functio
 
 |
 
-Now let's go back to the F5 ACI ServiceCenter , lets see the VLAN table, we dont see any infomration. This is because now the VLANS on the APIC has changed and there is no way for the application to co-relate the VLANS 1001 and 1002 anymore (since those VLANS dont exist anymore on the APIC)
+Now let's go back to the F5 ACI ServiceCenter , lets see the VLAN table, we dont see any information. This is because now the VLANS on the APIC has changed and there is no way for the application to co-relate the VLANS 1001 and 1002 anymore (since those VLANS dont exist anymore on the APIC)
 
-Now go to the L2-L3 Network management table
+Now go to the L2-L3 Network stitching tab
 
 Move the new VLANs from Available to Selected. 
 
@@ -62,7 +62,9 @@ Scroll to the bottom, you will see a warning sign next to each of the VLAN's. Ho
 Next click on Manage selected, Click continue
 
 Change the VLAN to reflect the new VLAN in the form and click submit. In my case
+
 - 1002 changed to 1171
+
 - 1001 changed to 1003
 
 .. note::
@@ -102,7 +104,7 @@ On the BIG-IP navigate to Network->VLAN and click on the VLAN to be modified. Ch
 
 Now let's go back to the F5 ACI ServiceCenter , lets see the VLAN table, we only see one entry. This is because now the VLAN on the BIG-IP has changed and that VLAN does not exist on the APIC (so no co-relation)
 
-Now go to the L2-L3 Network management table
+Now go to the L2-L3 Network stitching tab
 
 Move the new VLANs from Available to Selected. 
 
@@ -126,3 +128,5 @@ Click on the button 'SYNC TO BIG-IP'
 At this point the application will change the VLAN tag back to the original and the out-of-sync issue has been taken care of
 
 You can view the VLAN table under visibility and see both entires now. You can at this point also login to the BIG-IP and view the VLAN change. 
+
+**This brings us to the end of this section**

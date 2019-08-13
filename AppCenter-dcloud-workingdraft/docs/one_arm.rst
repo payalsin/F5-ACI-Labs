@@ -1,7 +1,7 @@
 One-Arm Service Graph (OPTIONAL)
 =================================================
 
-In the previous section the lab guide went through the process of creating a two-arm graph on the APIC representing a two-arm deployment model on the F5 loab balancer
+The previou section went through the process of creating a two-arm graph on the APIC representing a two-arm deployment model on the F5 load balancer
 
 Let's go over the difference between a one and two arm deployment model:
 

@@ -145,7 +145,7 @@ Now change the **vars.yml** to point to the new Tenant and EPG (EPG name is the 
 
    tenant_name: "SJC"
    epg_name: "Provider-EPG"
-   part_name: <<name of partition created by you>>
+   part_name: "DemoParitionSJC" <<OR if you provided a different name>>
     
 Run your playbook again: 
 
@@ -164,6 +164,8 @@ Output will be similiar to
    ok: [localhost] => (item={u'status': u'unknown', u'name': u'10.193.102.3', u'app': {u'dn': u'uni/tn-SJC/ap-SJC-APN', u'name': u'SJC-APN'}, u'partition': u'DemoPartitionSJC', u'enabled': u'enabled', u'address': u'10.193.102.3', u'epg': {u'dn': u'uni/tn-SJC/ap-SJC-APN/epg-Provider-EPG', u'name': u'Provider-EPG'}, u'fullpath': u'/DemoPartitionSJC/10.193.102.3', u'tenant': {u'dn': u'uni/tn-SJC', u'name': u'SJC'}}) => {
     "msg": "10.193.102.3"
    }
+
+Output will display workload now that belong to APIC tenant SJC and EPG Provider-EPG
 
 This brings us to an end of the lab exercises. To summarize what we went through
 
@@ -195,7 +197,7 @@ Command: **ansible-playbook delete.application.yml**
 
 Go back to the F5 ACI ServiceCenter and click on the L4-L7 App services tab.
 
-Try to select a parition, if partition deleted sucessfully and this point you will see only 1 more partition
+Try to select a parition, if partition deleted sucessfully then at this point you will see only 1 more partition
 
 Change the vars.yml file to reflect the parition you see and run the ansible playbook again
 

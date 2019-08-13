@@ -20,10 +20,11 @@ Lab environment
 
 ..
   
-- Locate the AnyConnect Credentials and use AnyConnect on your local device to connect to the lab. Ypu credentials will defer from what is mentioned in the screen shot
+- Locate the AnyConnect Credentials and use AnyConnect on your local device to connect to the lab. Your credentials will defer from what is mentioned in the screen shot
 
-- Once VPN connection is sucessful RDP to the windows client. Back to the Details section on the main session page
-  you will see the topology with various end points. Hover over each end point to locate the login credentials
+- Once VPN connection is sucessful then RDP to the windows client. 
+
+- Back to the Details section on the main session page you will see the topology with various end points. Hover over each end point to locate the login credentials
   
   - Hover over the wkst1 icon to get login credentails of the windows remote desktop
 

@@ -7,7 +7,7 @@ In this section we are going to login to the linux host start the F5 ACI Service
 
 .. note::
 
-   In an environment where there is a physcial APIC (standalone or cluster), the F5 ACI ServiceCenter will be present as a software image that is uploaded to the APIC
+   In an environment where there is a physical APIC (standalone or cluster), the F5 ACI ServiceCenter will be present as a software image that is uploaded to the APIC
    Access to the application will from within the APIC user itself. 
    
    View this video to familarize yourself with the APIC user interface and where the application will be accessed from.

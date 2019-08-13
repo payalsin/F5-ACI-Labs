@@ -118,9 +118,9 @@ Configure as follow:
   
 - Device Type: "Virtual"
   
-- VMM Domain: Select the VMM domain already integrated in APIC where BIG-IP VE is hosted- "my -vCenter"
+- VMM Domain: Select the VMM domain already integrated in APIC where BIG-IP VE is hosted- "My-vCenter"
   
-- Content-Aware: "Single" , in this example it is a standalone BIG-IP VE
+- Content-Aware: "Single"
   
 - Devices:
   
@@ -164,7 +164,7 @@ Configure as follow:
 		 
          - Network adaptor 2 as defined above is used for External (client) traffic 
 		 
-         - Network adoptor 3 as defined above is used for Internal (server) traffic
+         - Network adaptor 3 as defined above is used for Internal (server) traffic
 		 
   - Back to the main screen of the logical device cluster click on the '+' sign on the top right under the Cluster section
 	

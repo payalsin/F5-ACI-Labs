@@ -19,15 +19,19 @@ We will be using POSTMAN to execute the API's. Steps that will be performed:
 
 Open the POSTMAN application which is present on the desktop
 
+|
+
 .. image:: ./_static/postman0.png
 
-..
+|
 
 Once you login go to the 'Collections tab'
 
+|
+
 .. image:: ./_static/postman01.png
 
-..
+|
 
 **Go to collection 'F5 ACI ServiceCenter API'**
 
@@ -40,9 +44,11 @@ Click on APIC Login request
 
 - The body of the POST has the login credentials
 
+|
+
 .. image:: ./_static/postman1.png
 
-..
+|
 
 Click Send
 
@@ -50,14 +56,15 @@ Look at the response and copy the value of token, example shown below
 
 **If you cannot see the response make sure you adjust the response frame, sometimes its hidden below after you hit send**
 
+|
 
 .. image:: ./_static/postman2.png
 
-..
+|
    
 .. note::
 
-   The token value that you will see will not be the same. Copy value withing the "". 
+   The token value that you will see will not be the same. Copy value within the "". 
    
    In the above example it will be 
    
@@ -74,15 +81,19 @@ Click on the BIG-IP Login request
 
 Go to the Headers tab and under the Key DevCookie put the value of the token from the APIC login request
 
+|
+
 .. image:: ./_static/postman3.png
 
-..
+|
 
-Take a look at the body of the POST. Here we are specifying the BIG-IP credentials that we want to log into. This is equivalent to adding a new device throught the user interface
+Take a look at the body of the POST. Here we are specifying the BIG-IP credentials that we want to log into. This is equivalent to adding a new device through the user interface
+
+|
 
 .. image:: ./_static/postman4.png
 
-..
+|
 
 Click Send
 
@@ -109,11 +120,11 @@ You should get a response of 200 ok with the output of the login request similia
 Get Virtual IP health statistics
 ````````````````````````````````
 
-Click on the Visibility - VIP Table request
+Click on the 'Visibility - VIP Table' postman request
 
 Go to the Headers tab and under the Key DevCookie put the value of the token from the APIC login request
 
-Take a look at the body of the POST. Here we are specifying the BIG-IP address as well as the parition. This is equivalent to viewing the VIP table from the visbility tab for a particualr parition on the user interface
+Take a look at the body of the POST. Here we are specifying the BIG-IP address as well as the partition. This is equivalent to viewing the VIP table from the visbility tab for a particualr parition on the user interface
 
 Click Send
 
@@ -188,11 +199,11 @@ In the output you can view the VIP/Pool/Node member status, IP address and other
 Get BIG-IP network information
 ``````````````````````````````
 
-Click on the L2-L3 - Get Network Information request
+Click on the 'L2-L3 - Get Network Information' postman  request
 
 Go to the Headers tab and under the Key DevCookie put the value of the token from the APIC login request
 
-Take a look at the body of the POST. Here we are specifying the BIG-IP address as well as the APIC tenant and logical device. This is equivalent to viewing the Self-IP and VLAN information that has been stitched for a particular logical device cluster using the L2-L3 Netowork Management tab on the user interface.
+Take a look at the body of the POST. Here we are specifying the BIG-IP address as well as the APIC tenant and logical device. This is equivalent to viewing the Self-IP and VLAN information that has been stitched for a particular logical device cluster using the L2-L3 network stitching tab on the user interface.
 
 Click Send
 
@@ -298,3 +309,5 @@ In the output you can view the Self-IP and VLAN infomration.
   
   
 For a complete list of the API's supported refer to link <<postman collection link>>
+
+**This brings us to the end of this section**
