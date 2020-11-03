@@ -7,7 +7,7 @@
     epg_members: []
     pool_members: []
     pool_members_ip: []
-    parition: "DynamicEP"
+    partition: "DynamicEP"
   
   tasks:
   - name: Setup provider
@@ -47,13 +47,13 @@
       host: "{{item}}"
       port: "{{pool_port}}"
       pool: "{{pool_name}}"
-      parition: "{{parition}}"
+      partition: "{{partition}}"
     loop: "{{epg_members}}"
 
   - name: Query BIG-IP facts
     bigip_device_facts:
       provider: "{{provider}}"
-      parition: "{{parition}}"
+      partition: "{{partition}}"
       gather_subset:
        - ltm-pools
     register: bigip_facts
@@ -84,5 +84,5 @@
       port: "{{pool_port}}"
       pool: "{{pool_name}}"
       preserve_node: yes
-      parition: "{{parition}}"
+      partition: "{{partition}}"
     loop: "{{members_to_be_deleted}}"
