@@ -52,7 +52,6 @@
   - name: Query BIG-IP facts
     bigip_device_facts:
       provider: "{{provider}}"
-      partition: "{{partition}}"
       gather_subset:
        - ltm-pools
     register: bigip_facts
