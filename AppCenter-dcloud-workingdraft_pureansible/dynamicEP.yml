@@ -7,7 +7,7 @@
     epg_members: []
     pool_members: []
     pool_members_ip: []
-    partition: "DynamicEP"
+    partition: "DynamicEP/WebApplication"
   
   tasks:
   - name: Setup provider
