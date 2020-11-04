@@ -1,0 +1,120 @@
+---
+- name: Get VIP and status
+  hosts: localhost
+  gather_facts: false
+  connection: local
+
+  vars:
+   apic_ip: "10.192.73.50"
+   big_ip: "10.192.73.191"
+   partition: "Dynamic"
+   #partition: "Brownfield"
+
+  tasks:
+
+  - name: Login to APIC
+    uri:
+       url: https://{{apic_ip}}/api/aaaLogin.json
+       method: POST
+       validate_certs: no
+       body_format: json
+       body:
+        aaaUser:
+         attributes:
+          name: "admin"
+          pwd: "cisco123"
+       headers:
+         content_type: "application/json"
+       return_content: yes
+    register: cookie
+
+  - debug: msg="{{cookie['cookies']['APIC-cookie']}}"
+
+  - set_fact:
+     token: "{{cookie['cookies']['APIC-cookie']}}"
+
+  - name: Login to BIG-IP
+    uri:
+      url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/loginbigip.json
+      method: POST
+      validate_certs: no
+      body:
+       url: "{{big_ip}}"
+       user: "admin"
+       password: "admin"
+      body_format: json
+      headers:
+       DevCookie: "{{token}}"
+
+  - name: Deploy AS3 dynamic EP mapping
+    uri:
+       url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/updateas3data.json
+       method: POST
+       validate_certs: no
+       body:
+        url: "{{big_ip}}"
+        partition: "{{partition}}"
+        application: "DemoApp1"
+        json:
+         class: Application
+         template: http
+         serviceMain:
+           class: Service_HTTP
+           virtualAddresses:
+           - 10.168.56.252
+           pool: web_pool
+         web_pool:
+           class: Pool
+           monitors:
+           - http
+           members:
+           - servicePort: 80
+             serverAddresses: []
+           - addressDiscovery: event
+             servicePort: 80
+         constants:
+           class: Constants
+           serviceCenterEPG:
+             web_pool:
+               tenant: AspireDemo
+               application: AppProfile
+               epg: internalEPG
+       body_format: json
+       status_code:
+       - 202
+       - 200
+       headers:
+        DevCookie: "{{token}}"
+       return_content: yes
+    register: complete_info
+
+
+  - name: Get task ID
+    set_fact:
+     task_id: "{{ complete_info.json.message.taskId}}"
+    when: complete_info.json.code == 202
+
+  - name: Dislplay VIP and status information
+    debug:
+     var: task_id
+
+  - name: Get final deployment result
+    uri:
+      url: https://{{apic_ip}}/appcenter/F5Networks/F5ACIServiceCenter/getasynctaskresponse.json
+      method: POST
+      validate_certs: no
+      body:
+       taskId: "{{task_id}}"
+      body_format: json
+      headers:
+       DevCookie: "{{token}}"
+      return_content: yes
+    register: result
+    until: result.json.message.message != "in progress"
+    retries: 5
+    delay: 2
+    when: task_id is defined
+
+  - name: Dislplay Final result
+    debug:
+     var: result
